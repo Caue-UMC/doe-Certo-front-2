@@ -1,0 +1,26 @@
+<main>
+  <section class="main-section">
+    <img src="assets/svg/maoslogin.svg">
+  </section>
+
+  <section class="form-section">
+    <img src="assets/svg/DoeCerto-text.svg">
+
+    <h2>{{title}}</h2>
+    <ng-content></ng-content>
+
+    <div class="btn-wrapper">
+    <button class="btn-primary"
+            (click)="submit()"
+            [disabled]="disablePrimaryBtn">
+      {{primaryBtnText}}</button>
+
+    <div class="divider">
+      <div></div>
+      <span style="color: black">ou</span>
+      <div></div>
+    </div>
+    <button class="btn-secondary" (click)="navigate()">{{secundaryBtnText}}</button>
+    </div>
+  </section>
+</main>

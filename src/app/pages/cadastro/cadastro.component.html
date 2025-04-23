@@ -1,0 +1,83 @@
+<app-default-login-layout
+  title="Cadastre-se"
+  primaryBtnText="Cadastrar"
+  secundaryBtnText="Entrar"
+  (submit)='submit()'
+  (navigate)="navigate()"
+  [disablePrimaryBtn]="!cadastroForm.valid"
+>
+  <form [formGroup]="cadastroForm" >
+    <app-primary-input
+      formControlName="email"
+      inputName="email"
+      type="email"
+      label="Email"
+    >
+      <img src="/assets/svg/email-icon.svg">
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="cnpj"
+      inputName="cnpj"
+      type="text"
+      label="Cnpj"
+    >
+      <img src="/assets/svg/email-icon.svg">
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="nomeInstituicao"
+      inputName="nomeInstituicao"
+      type="text"
+      label="Nome da Instituicao"
+    >
+      <img src="/assets/svg/email-icon.svg">
+    </app-primary-input>
+
+    <app-primary-input
+        formControlName="categoria"
+        inputName="categoria"
+        type="text"
+        label="Categoria"
+    >
+      <img src="/assets/svg/email-icon.svg">
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="endereco"
+      inputName="endereco"
+      type="text"
+      label="Endereco"
+    >
+      <img src="/assets/svg/senha-icon.svg">
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="telefone"
+      inputName="telefone"
+      type="text"
+      label="Telefone"
+    >
+      <img src="/assets/svg/senha-icon.svg">
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="senha"
+      inputName="senha"
+      type="password"
+      label="Senha"
+    >
+      <img src="/assets/svg/senha-icon.svg">
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="confirmaSenha"
+      inputName="confirmaSenha"
+      type="password"
+      label="Confirme sua senha"
+    >
+      <img src="/assets/svg/senha-icon.svg">
+    </app-primary-input>
+
+  </form>
+</app-default-login-layout>

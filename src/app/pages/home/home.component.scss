@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #ffffff, #007BBD);
+}
+
+header {
+  background-color: #00aaff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+}
+
+.logo span {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.search-login {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.search-login input {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+}
+
+.search-login button {
+  background-color: #f24182;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.banner {
+  background: linear-gradient(to right, #fcee21, #f24182);
+  padding: 40px;
+  text-align: center;
+  color: black;
+}
+
+.banner img {
+  max-width: 150px;
+  margin-bottom: 20px;
+}
+
+.cards-section {
+  background: white;
+  padding: 40px;
+  text-align: center;
+}
+
+.cards-section h2 {
+  margin-bottom: 30px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.card {
+  width: 100px;
+  height: 150px;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+footer {
+  background-color: #f24182;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+}
