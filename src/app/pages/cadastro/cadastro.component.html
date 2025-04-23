@@ -34,14 +34,25 @@
       <img src="/assets/svg/email-icon.svg">
     </app-primary-input>
 
-    <app-primary-input
-        formControlName="categoria"
-        inputName="categoria"
-        type="text"
-        label="Categoria"
-    >
-      <img src="/assets/svg/email-icon.svg">
-    </app-primary-input>
+    <div class="input-wrapper">
+      <label>Categoria</label>
+      <div class="input-content">
+        <div class="select-wrapper">
+          <select formControlName="categoria">
+            <option value="" disabled selected hidden>Selecione uma categoria</option>
+            <option value="ONG">Ong</option>
+            <option value="ESCOLA">Escola</option>
+            <option value="HOSPITAL">Hospital</option>
+            <option value="IGREJA">Igreja</option>
+            <option value="CULTURA">Cultura</option>
+            <option value="OUTRA">Outras</option>
+          </select>
+
+          <img class="arrow-icon" src="/assets/svg/arrow-down-icon.svg" alt="seta" />
+          <img class="right-icon" src="/assets/svg/email-icon.svg" alt="ícone categoria" />
+        </div>
+      </div>
+    </div>
 
     <app-primary-input
       formControlName="endereco"
