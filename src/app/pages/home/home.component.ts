@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,
+            NavbarComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -15,4 +17,8 @@ export class HomeComponent {
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem("token");
+  }
+
 }

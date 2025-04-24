@@ -44,10 +44,23 @@ export class LoginComponent {
       this.loginForm.value.email,
       this.loginForm.value.senha
     ).subscribe({
-      next: () => {
+
+      next: (res: any) => {
+        sessionStorage.setItem('auth-token', res.token);
+        sessionStorage.setItem('id', res.id);
+        sessionStorage.setItem('email', res.email);
         this.toastService.success("Login feito com sucesso!");
         this.router.navigate(['/user']);
       },
+
+      // next: (res: any) => {
+      //   sessionStorage.setItem('auth-token', res.token); // Salva o token na sessão
+      //   sessionStorage.setItem('id', res.id); // Salva o id na sessao
+      //   this.toastService.success("Login feito com sucesso!");
+      //   this.router.navigate(['/user']);
+      //
+      // },
+
       error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
     });
   }
