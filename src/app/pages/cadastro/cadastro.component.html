@@ -1,12 +1,107 @@
+<!--<app-default-login-layout-->
+<!--  title="Cadastre-se"-->
+<!--  primaryBtnText="Cadastrar"-->
+<!--  secundaryBtnText="Entrar"-->
+<!--  (submit)='submit()'-->
+<!--  (navigate)="navigate()"-->
+<!--  [disablePrimaryBtn]="!cadastroForm.valid"-->
+<!--&gt;-->
+<!--  <form [formGroup]="cadastroForm" >-->
+<!--    <app-primary-input-->
+<!--      formControlName="email"-->
+<!--      inputName="email"-->
+<!--      type="email"-->
+<!--      label="Email"-->
+<!--    >-->
+<!--      <img src="/assets/svg/email-icon.svg">-->
+<!--    </app-primary-input>-->
+
+<!--    <app-primary-input-->
+<!--      formControlName="cnpj"-->
+<!--      inputName="cnpj"-->
+<!--      type="text"-->
+<!--      label="Cnpj"-->
+<!--    >-->
+<!--      <img src="/assets/svg/id-icon.svg">-->
+<!--    </app-primary-input>-->
+
+<!--    <app-primary-input-->
+<!--      formControlName="nomeInstituicao"-->
+<!--      inputName="nomeInstituicao"-->
+<!--      type="text"-->
+<!--      label="Nome da Instituicao"-->
+<!--    >-->
+<!--      <img src="/assets/svg/nome-icon.svg">-->
+<!--    </app-primary-input>-->
+
+<!--    <div class="input-wrapper">-->
+<!--      <label>Categoria</label>-->
+<!--      <div class="input-content">-->
+<!--        <div class="select-wrapper">-->
+<!--          <select formControlName="categoria">-->
+<!--            <option value="" disabled selected hidden>Selecione uma categoria</option>-->
+<!--            <option value="ONG">Ong</option>-->
+<!--            <option value="ESCOLA">Escola</option>-->
+<!--            <option value="HOSPITAL">Hospital</option>-->
+<!--            <option value="IGREJA">Igreja</option>-->
+<!--            <option value="CULTURA">Cultura</option>-->
+<!--            <option value="OUTRA">Outras</option>-->
+<!--          </select>-->
+
+<!--          <img class="arrow-icon" src="/assets/svg/arrow-down-icon.svg" alt="seta" />-->
+<!--          <img class="right-icon" src="/assets/svg/categoria-icon.svg" alt="ícone categoria" />-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <app-primary-input-->
+<!--      formControlName="endereco"-->
+<!--      inputName="endereco"-->
+<!--      type="text"-->
+<!--      label="Endereco"-->
+<!--    >-->
+<!--      <img src="/assets/svg/adress-icon.svg">-->
+<!--    </app-primary-input>-->
+
+<!--    <app-primary-input-->
+<!--      formControlName="telefone"-->
+<!--      inputName="telefone"-->
+<!--      type="text"-->
+<!--      label="Telefone"-->
+<!--    >-->
+<!--      <img src="/assets/svg/cell-icon.svg">-->
+<!--    </app-primary-input>-->
+
+<!--    <app-primary-input-->
+<!--      formControlName="senha"-->
+<!--      inputName="senha"-->
+<!--      type="password"-->
+<!--      label="Senha"-->
+<!--    >-->
+<!--      <img src="/assets/svg/senha-icon.svg">-->
+<!--    </app-primary-input>-->
+
+<!--    <app-primary-input-->
+<!--      formControlName="confirmaSenha"-->
+<!--      inputName="confirmaSenha"-->
+<!--      type="password"-->
+<!--      label="Confirme sua senha"-->
+<!--    >-->
+<!--      <img src="/assets/svg/senha-icon.svg">-->
+<!--    </app-primary-input>-->
+
+<!--  </form>-->
+<!--</app-default-login-layout>-->
 <app-default-login-layout
   title="Cadastre-se"
   primaryBtnText="Cadastrar"
   secundaryBtnText="Entrar"
-  (submit)='submit()'
+  (submit)="submit()"
   (navigate)="navigate()"
   [disablePrimaryBtn]="!cadastroForm.valid"
 >
-  <form [formGroup]="cadastroForm" >
+  <form [formGroup]="cadastroForm">
+
     <app-primary-input
       formControlName="email"
       inputName="email"
@@ -20,7 +115,7 @@
       formControlName="cnpj"
       inputName="cnpj"
       type="text"
-      label="Cnpj"
+      label="CNPJ"
     >
       <img src="/assets/svg/id-icon.svg">
     </app-primary-input>
@@ -29,7 +124,7 @@
       formControlName="nomeInstituicao"
       inputName="nomeInstituicao"
       type="text"
-      label="Nome da Instituicao"
+      label="Nome da Instituição"
     >
       <img src="/assets/svg/nome-icon.svg">
     </app-primary-input>
@@ -40,16 +135,13 @@
         <div class="select-wrapper">
           <select formControlName="categoria">
             <option value="" disabled selected hidden>Selecione uma categoria</option>
-            <option value="ONG">Ong</option>
-            <option value="ESCOLA">Escola</option>
-            <option value="HOSPITAL">Hospital</option>
-            <option value="IGREJA">Igreja</option>
-            <option value="CULTURA">Cultura</option>
-            <option value="OUTRA">Outras</option>
+            <option *ngFor="let categoria of categorias" [value]="categoria">
+              {{ categoria }}
+            </option>
           </select>
 
-          <img class="arrow-icon" src="/assets/svg/arrow-down-icon.svg" alt="seta" />
-          <img class="right-icon" src="/assets/svg/categoria-icon.svg" alt="ícone categoria" />
+          <img class="arrow-icon" src="/assets/svg/arrow-down-icon.svg" alt="Seta para baixo" />
+          <img class="right-icon" src="/assets/svg/categoria-icon.svg" alt="Ícone categoria" />
         </div>
       </div>
     </div>
@@ -58,7 +150,7 @@
       formControlName="endereco"
       inputName="endereco"
       type="text"
-      label="Endereco"
+      label="Endereço"
     >
       <img src="/assets/svg/adress-icon.svg">
     </app-primary-input>
@@ -92,3 +184,4 @@
 
   </form>
 </app-default-login-layout>
+

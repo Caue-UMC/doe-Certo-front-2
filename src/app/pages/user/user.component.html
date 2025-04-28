@@ -1,20 +1,64 @@
+<!--<app-navbar></app-navbar>-->
+
+<!--<div class="user-container">-->
+<!--  <h2>Editar dados da conta</h2>-->
+<!--  <form [formGroup]="form" (ngSubmit)="atualizar()">-->
+<!--    <input type="text" placeholder="Nome da Instituição" formControlName="nomeInstituicao" class="form-input" />-->
+<!--&lt;!&ndash;    <input type="email" placeholder="Email" formControlName="email" class="form-input" />&ndash;&gt;-->
+<!--&lt;!&ndash;    <input type="text" placeholder="CNPJ" formControlName="cnpj" class="form-input" />&ndash;&gt;-->
+<!--    <input type="text" placeholder="Telefone" formControlName="telefone" class="form-input" />-->
+<!--    <input type="text" placeholder="Endereço" formControlName="endereco" class="form-input" />-->
+
+<!--    &lt;!&ndash; Puxas as Categorias &ndash;&gt;-->
+<!--    <select formControlName="categoria" class="form-input">-->
+<!--      <option *ngFor="let categoria of categorias" [value]="categoria">-->
+<!--        {{ categoria }}-->
+<!--      </option>-->
+<!--    </select>-->
+
+<!--    <div class="btn-group">-->
+<!--      <button type="submit" class="btn salvar">Salvar alterações</button>-->
+<!--      <button type="button" class="btn excluir" (click)="excluir()">Excluir conta</button>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--</div>-->
+
 <app-navbar></app-navbar>
 
 <div class="user-container">
   <h2>Editar dados da conta</h2>
+
   <form [formGroup]="form" (ngSubmit)="atualizar()">
-    <input type="text" placeholder="Nome da Instituição" formControlName="nomeInstituicao" class="form-input" />
-    <input type="email" placeholder="Email" formControlName="email" class="form-input" />
-    <input type="text" placeholder="CNPJ" formControlName="cnpj" class="form-input" />
-    <input type="text" placeholder="Telefone" formControlName="telefone" class="form-input" />
-    <input type="text" placeholder="Endereço" formControlName="endereco" class="form-input" />
-    <select formControlName="categoria" class="form-input" [disabled]="true">
-    <option [value]="form.get('categoria')?.value">{{ form.get('categoria')?.value }}</option>
+
+    <label for="nomeInstituicao">Nome da Instituição</label>
+    <input id="nomeInstituicao" type="text" placeholder="Nome da Instituição" formControlName="nomeInstituicao" class="form-input" />
+
+    <!--
+    <label for="email">Email</label>
+    <input id="email" type="email" placeholder="Email" formControlName="email" class="form-input" />
+
+    <label for="cnpj">CNPJ</label>
+    <input id="cnpj" type="text" placeholder="CNPJ" formControlName="cnpj" class="form-input" />
+    -->
+
+    <label for="telefone">Telefone</label>
+    <input id="telefone" type="text" placeholder="Telefone" formControlName="telefone" class="form-input" />
+
+    <label for="endereco">Endereço</label>
+    <input id="endereco" type="text" placeholder="Endereço" formControlName="endereco" class="form-input" />
+
+    <label for="categoria">Categoria</label>
+    <select id="categoria" formControlName="categoria" class="form-input">
+      <option *ngFor="let categoria of categorias" [value]="categoria">
+        {{ categoria }}
+      </option>
     </select>
 
     <div class="btn-group">
       <button type="submit" class="btn salvar">Salvar alterações</button>
       <button type="button" class="btn excluir" (click)="excluir()">Excluir conta</button>
     </div>
+
   </form>
 </div>
+
