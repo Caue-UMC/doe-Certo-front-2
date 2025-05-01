@@ -1,67 +1,78 @@
 <!--<app-default-login-layout-->
 <!--  title="Cadastre-se"-->
-<!--  primaryBtnText="Cadastrar"-->
+<!--  [primaryBtnText]="primaryText"-->
 <!--  secundaryBtnText="Entrar"-->
-<!--  (submit)='submit()'-->
+<!--  [disablePrimaryBtn]="disableBtn"-->
 <!--  (navigate)="navigate()"-->
-<!--  [disablePrimaryBtn]="!cadastroForm.valid"-->
 <!--&gt;-->
-<!--  <form [formGroup]="cadastroForm" >-->
+<!--  <form [formGroup]="cadastroForm" (ngSubmit)="submit()">-->
+
 <!--    <app-primary-input-->
 <!--      formControlName="email"-->
 <!--      inputName="email"-->
 <!--      type="email"-->
 <!--      label="Email"-->
 <!--    >-->
-<!--      <img src="/assets/svg/email-icon.svg">-->
+<!--      <img src="/assets/svg/email-icon.svg" />-->
 <!--    </app-primary-input>-->
+<!--    <p class="error" *ngIf="cadastroForm.get('email')?.invalid && cadastroForm.get('email')?.touched">-->
+<!--      Insira um email válido.-->
+<!--    </p>-->
 
 <!--    <app-primary-input-->
 <!--      formControlName="cnpj"-->
 <!--      inputName="cnpj"-->
 <!--      type="text"-->
-<!--      label="Cnpj"-->
+<!--      label="CNPJ"-->
 <!--    >-->
-<!--      <img src="/assets/svg/id-icon.svg">-->
+<!--      <img src="/assets/svg/id-icon.svg" />-->
 <!--    </app-primary-input>-->
+<!--    <p class="error" *ngIf="cadastroForm.get('cnpj')?.invalid && cadastroForm.get('cnpj')?.touched">-->
+<!--      Preencha o CNPJ.-->
+<!--    </p>-->
 
 <!--    <app-primary-input-->
 <!--      formControlName="nomeInstituicao"-->
 <!--      inputName="nomeInstituicao"-->
 <!--      type="text"-->
-<!--      label="Nome da Instituicao"-->
+<!--      label="Nome da Instituição"-->
 <!--    >-->
-<!--      <img src="/assets/svg/nome-icon.svg">-->
+<!--      <img src="/assets/svg/nome-icon.svg" />-->
 <!--    </app-primary-input>-->
+<!--    <p class="error" *ngIf="cadastroForm.get('nomeInstituicao')?.invalid && cadastroForm.get('nomeInstituicao')?.touched">-->
+<!--      Preencha o nome da instituição.-->
+<!--    </p>-->
 
 <!--    <div class="input-wrapper">-->
 <!--      <label>Categoria</label>-->
-<!--      <div class="input-content">-->
-<!--        <div class="select-wrapper">-->
-<!--          <select formControlName="categoria">-->
-<!--            <option value="" disabled selected hidden>Selecione uma categoria</option>-->
-<!--            <option value="ONG">Ong</option>-->
-<!--            <option value="ESCOLA">Escola</option>-->
-<!--            <option value="HOSPITAL">Hospital</option>-->
-<!--            <option value="IGREJA">Igreja</option>-->
-<!--            <option value="CULTURA">Cultura</option>-->
-<!--            <option value="OUTRA">Outras</option>-->
-<!--          </select>-->
-
-<!--          <img class="arrow-icon" src="/assets/svg/arrow-down-icon.svg" alt="seta" />-->
-<!--          <img class="right-icon" src="/assets/svg/categoria-icon.svg" alt="ícone categoria" />-->
+<!--      <div class="select-wrapper">-->
+<!--        <select formControlName="categoria">-->
+<!--          <option [ngValue]="null" disabled hidden>Selecione uma categoria</option>-->
+<!--          <option *ngFor="let categoria of categorias" [value]="categoria">-->
+<!--            {{ categoria }}-->
+<!--          </option>-->
+<!--        </select>-->
+<!--        <div class="right-group">-->
+<!--          <img class="arrow-icon" src="/assets/svg/arrow-down-icon.svg" alt="Seta para baixo" />-->
+<!--          <img class="right-icon" src="/assets/svg/categoria-icon.svg" alt="Ícone categoria" />-->
 <!--        </div>-->
 <!--      </div>-->
 <!--    </div>-->
+<!--    <p class="error" *ngIf="cadastroForm.get('categoria')?.invalid && cadastroForm.get('categoria')?.touched">-->
+<!--      Selecione uma categoria.-->
+<!--    </p>-->
 
 <!--    <app-primary-input-->
 <!--      formControlName="endereco"-->
 <!--      inputName="endereco"-->
 <!--      type="text"-->
-<!--      label="Endereco"-->
+<!--      label="Endereço"-->
 <!--    >-->
-<!--      <img src="/assets/svg/adress-icon.svg">-->
+<!--      <img src="/assets/svg/adress-icon.svg" />-->
 <!--    </app-primary-input>-->
+<!--    <p class="error" *ngIf="cadastroForm.get('endereco')?.invalid && cadastroForm.get('endereco')?.touched">-->
+<!--      Preencha o endereço.-->
+<!--    </p>-->
 
 <!--    <app-primary-input-->
 <!--      formControlName="telefone"-->
@@ -69,8 +80,11 @@
 <!--      type="text"-->
 <!--      label="Telefone"-->
 <!--    >-->
-<!--      <img src="/assets/svg/cell-icon.svg">-->
+<!--      <img src="/assets/svg/cell-icon.svg" />-->
 <!--    </app-primary-input>-->
+<!--    <p class="error" *ngIf="cadastroForm.get('telefone')?.invalid && cadastroForm.get('telefone')?.touched">-->
+<!--      Preencha o telefone.-->
+<!--    </p>-->
 
 <!--    <app-primary-input-->
 <!--      formControlName="senha"-->
@@ -78,8 +92,11 @@
 <!--      type="password"-->
 <!--      label="Senha"-->
 <!--    >-->
-<!--      <img src="/assets/svg/senha-icon.svg">-->
+<!--      <img src="/assets/svg/senha-icon.svg" />-->
 <!--    </app-primary-input>-->
+<!--    <p class="error" *ngIf="cadastroForm.get('senha')?.invalid && cadastroForm.get('senha')?.touched">-->
+<!--      A senha deve ter no mínimo 6 caracteres.-->
+<!--    </p>-->
 
 <!--    <app-primary-input-->
 <!--      formControlName="confirmaSenha"-->
@@ -87,20 +104,25 @@
 <!--      type="password"-->
 <!--      label="Confirme sua senha"-->
 <!--    >-->
-<!--      <img src="/assets/svg/senha-icon.svg">-->
+<!--      <img src="/assets/svg/senha-icon.svg" />-->
 <!--    </app-primary-input>-->
+<!--    <p class="error" *ngIf="cadastroForm.get('confirmaSenha')?.invalid && cadastroForm.get('confirmaSenha')?.touched">-->
+<!--      Confirme a senha.-->
+<!--    </p>-->
 
+<!--    <button type="submit" class="btn-primary" [disabled]="disableBtn">-->
+<!--      {{ primaryText }}-->
+<!--    </button>-->
 <!--  </form>-->
 <!--</app-default-login-layout>-->
 <app-default-login-layout
   title="Cadastre-se"
-  primaryBtnText="Cadastrar"
+  [primaryBtnText]="primaryText"
   secundaryBtnText="Entrar"
-  (submit)="submit()"
+  [disablePrimaryBtn]="disableBtn"
   (navigate)="navigate()"
-  [disablePrimaryBtn]="!cadastroForm.valid"
 >
-  <form [formGroup]="cadastroForm">
+  <form [formGroup]="cadastroForm" (ngSubmit)="submit()">
 
     <app-primary-input
       formControlName="email"
@@ -108,8 +130,11 @@
       type="email"
       label="Email"
     >
-      <img src="/assets/svg/email-icon.svg">
+      <img src="/assets/svg/email-icon.svg" />
     </app-primary-input>
+    <p class="error" *ngIf="cadastroForm.get('email')?.invalid && cadastroForm.get('email')?.touched">
+      Insira um email válido.
+    </p>
 
     <app-primary-input
       formControlName="cnpj"
@@ -117,8 +142,11 @@
       type="text"
       label="CNPJ"
     >
-      <img src="/assets/svg/id-icon.svg">
+      <img src="/assets/svg/id-icon.svg" />
     </app-primary-input>
+    <p class="error" *ngIf="cadastroForm.get('cnpj')?.invalid && cadastroForm.get('cnpj')?.touched">
+      Preencha o CNPJ.
+    </p>
 
     <app-primary-input
       formControlName="nomeInstituicao"
@@ -126,25 +154,30 @@
       type="text"
       label="Nome da Instituição"
     >
-      <img src="/assets/svg/nome-icon.svg">
+      <img src="/assets/svg/nome-icon.svg" />
     </app-primary-input>
+    <p class="error" *ngIf="cadastroForm.get('nomeInstituicao')?.invalid && cadastroForm.get('nomeInstituicao')?.touched">
+      Preencha o nome da instituição.
+    </p>
 
     <div class="input-wrapper">
       <label>Categoria</label>
-      <div class="input-content">
-        <div class="select-wrapper">
-          <select formControlName="categoria">
-            <option value="" disabled selected hidden>Selecione uma categoria</option>
-            <option *ngFor="let categoria of categorias" [value]="categoria">
-              {{ categoria }}
-            </option>
-          </select>
-
+      <div class="select-wrapper">
+        <select formControlName="categoria">
+          <option [ngValue]="null" disabled hidden>Selecione uma categoria</option>
+          <option *ngFor="let categoria of categorias" [value]="categoria">
+            {{ categoria | lowercase | titlecase }}
+          </option>
+        </select>
+        <div class="right-group">
           <img class="arrow-icon" src="/assets/svg/arrow-down-icon.svg" alt="Seta para baixo" />
           <img class="right-icon" src="/assets/svg/categoria-icon.svg" alt="Ícone categoria" />
         </div>
       </div>
     </div>
+    <p class="error" *ngIf="cadastroForm.get('categoria')?.invalid && cadastroForm.get('categoria')?.touched">
+      Selecione uma categoria.
+    </p>
 
     <app-primary-input
       formControlName="endereco"
@@ -152,8 +185,11 @@
       type="text"
       label="Endereço"
     >
-      <img src="/assets/svg/adress-icon.svg">
+      <img src="/assets/svg/adress-icon.svg" />
     </app-primary-input>
+    <p class="error" *ngIf="cadastroForm.get('endereco')?.invalid && cadastroForm.get('endereco')?.touched">
+      Preencha o endereço.
+    </p>
 
     <app-primary-input
       formControlName="telefone"
@@ -161,8 +197,11 @@
       type="text"
       label="Telefone"
     >
-      <img src="/assets/svg/cell-icon.svg">
+      <img src="/assets/svg/cell-icon.svg" />
     </app-primary-input>
+    <p class="error" *ngIf="cadastroForm.get('telefone')?.invalid && cadastroForm.get('telefone')?.touched">
+      Preencha o telefone.
+    </p>
 
     <app-primary-input
       formControlName="senha"
@@ -170,8 +209,11 @@
       type="password"
       label="Senha"
     >
-      <img src="/assets/svg/senha-icon.svg">
+      <img src="/assets/svg/senha-icon.svg" />
     </app-primary-input>
+    <p class="error" *ngIf="cadastroForm.get('senha')?.invalid && cadastroForm.get('senha')?.touched">
+      A senha deve ter no mínimo 6 caracteres.
+    </p>
 
     <app-primary-input
       formControlName="confirmaSenha"
@@ -179,9 +221,14 @@
       type="password"
       label="Confirme sua senha"
     >
-      <img src="/assets/svg/senha-icon.svg">
+      <img src="/assets/svg/senha-icon.svg" />
     </app-primary-input>
+    <p class="error" *ngIf="cadastroForm.get('confirmaSenha')?.invalid && cadastroForm.get('confirmaSenha')?.touched">
+      Confirme a senha.
+    </p>
 
+    <button type="submit" class="btn-primary" [disabled]="disableBtn">
+      {{ primaryText }}
+    </button>
   </form>
 </app-default-login-layout>
-

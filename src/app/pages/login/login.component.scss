@@ -1,13 +1,43 @@
-form{
+form {
   width: 100%;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
   gap: 24px;
   margin-bottom: 34px;
 }
 
-span{
+span {
   font-size: 14px;
   text-decoration: underline;
+  color: #049DD9;
   text-align: right;
+}
+
+button.btn-primary {
+  width: 100%;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  background-color: #F24182;
+  color: white;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0px 8px 12px rgba(148, 64, 255, 0.2);
+
+  &:disabled {
+    opacity: 0.8;
+  }
+
+  &:hover {
+    opacity: 0.9;
+    transform: scale(1.01);
+  }
+}
+
+app-primary-input {
+  width: 100%;
+  display: block;
 }

@@ -6,21 +6,24 @@
   <section class="form-section">
     <img src="assets/svg/DoeCerto-text.svg">
 
-    <h2>{{title}}</h2>
-    <ng-content></ng-content>
+    <h2>{{ title }}</h2>
+
+    <div class="form-wrapper">
+      <ng-content></ng-content>
+    </div>
 
     <div class="btn-wrapper">
-    <button class="btn-primary"
-            (click)="submit()"
-            [disabled]="disablePrimaryBtn">
-      {{primaryBtnText}}</button>
+      <div class="divider">
+        <div></div>
+        <span style="color: black">ou</span>
+        <div></div>
+      </div>
 
-    <div class="divider">
-      <div></div>
-      <span style="color: black">ou</span>
-      <div></div>
-    </div>
-    <button class="btn-secondary" (click)="navigate()">{{secundaryBtnText}}</button>
+      <button type="button"
+              class="btn-secondary"
+              (click)="navigate()">
+        {{ secundaryBtnText }}
+      </button>
     </div>
   </section>
 </main>

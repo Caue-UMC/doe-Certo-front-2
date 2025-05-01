@@ -1,18 +1,16 @@
 <app-default-login-layout
   title="Acessar sua conta"
-  primaryBtnText="Entrar"
   secundaryBtnText="Criar conta"
-  (submit)='submit()'
   (navigate)="navigate()"
   [disablePrimaryBtn]="!loginForm.valid"
 >
-  <form [formGroup]="loginForm" >
+  <form [formGroup]="loginForm" (ngSubmit)="submit()">
     <app-primary-input
-        formControlName="email"
-        inputName="email"
-        type="email"
-        label="Email"
-        placeholder="Digite seu email aqui"
+      formControlName="email"
+      inputName="email"
+      type="email"
+      label="Email"
+      placeholder="Digite seu email aqui"
     >
       <img src="/assets/svg/email-icon.svg">
     </app-primary-input>
@@ -28,5 +26,9 @@
     </app-primary-input>
 
     <span style="color: #049DD9">Esqueceu sua senha?</span>
+
+    <button type="submit" class="btn-primary" [disabled]="!loginForm.valid">
+      Entrar
+    </button>
   </form>
 </app-default-login-layout>

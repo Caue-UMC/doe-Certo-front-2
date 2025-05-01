@@ -1,0 +1,31 @@
+<div class="user-container">
+  <h2>Alterar Senha</h2>
+
+  <form [formGroup]="form" (ngSubmit)="alterarSenha()">
+    <div class="input-wrapper">
+      <label for="senhaAtual">Senha Atual</label>
+      <input id="senhaAtual" type="password" formControlName="senhaAtual" class="form-input" />
+    </div>
+
+    <div class="input-wrapper">
+      <label for="novaSenha">Nova Senha</label>
+      <input id="novaSenha" type="password" formControlName="novaSenha" class="form-input" />
+    </div>
+
+    <div class="input-wrapper">
+      <label for="confirmaNovaSenha">Confirmar Nova Senha</label>
+      <input id="confirmaNovaSenha" type="password" formControlName="confirmaNovaSenha" class="form-input" />
+    </div>
+
+    <!-- Erro de senhas diferentes -->
+    <div *ngIf="form.get('confirmaNovaSenha')?.errors?.['senhasDiferentes'] && form.get('confirmaNovaSenha')?.touched" class="error-message">
+      As senhas não coincidem.
+    </div>
+
+    <div class="btn-group">
+      <button type="submit" class="btn salvar" [disabled]="!form.valid">
+        Salvar Nova Senha
+      </button>
+    </div>
+  </form>
+</div>

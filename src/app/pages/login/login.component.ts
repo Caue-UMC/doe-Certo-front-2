@@ -35,7 +35,7 @@ export class LoginComponent {
   ){
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      senha: new FormControl('', [Validators.required]) //Validators.minLength(6)])
+      senha: new FormControl('', [Validators.required, Validators.minLength(6)])
     })
   }
 
@@ -50,21 +50,12 @@ export class LoginComponent {
         sessionStorage.setItem('id', res.id);
         sessionStorage.setItem('email', res.email);
         this.toastService.success("Login feito com sucesso!");
-        this.router.navigate(['/user']);
+        this.router.navigate(['/instituicao']);
       },
-
-      // next: (res: any) => {
-      //   sessionStorage.setItem('auth-token', res.token); // Salva o token na sessão
-      //   sessionStorage.setItem('id', res.id); // Salva o id na sessao
-      //   this.toastService.success("Login feito com sucesso!");
-      //   this.router.navigate(['/user']);
-      //
-      // },
 
       error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
     });
   }
-
 
   navigate(){
     this.router.navigate(["cadastro"])

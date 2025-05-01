@@ -1,121 +1,32 @@
-// import {DefaultLoginLayoutComponent} from "../../components/default-login-layout/default-login-layout.component";
-// import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-// import {PrimaryInputComponent} from "../../components/primary-input/primary-input.component";
-// import {Router} from "@angular/router";
-// import {LoginService} from "../../services/login.service";
-// import {ToastrService} from "ngx-toastr";
-// import {Component, OnInit} from "@angular/core"; // 🔵 ATENÇÃO: adicionei OnInit
-// import { CommonModule } from '@angular/common';
-// import { InstituicaoService } from "../../services/instituicao.service";
-//
-// interface CadastroForm{
-//   email: FormControl;
-//   cnpj: FormControl;
-//   nomeInstituicao: FormControl;
-//   categoria: FormControl;
-//   endereco: FormControl;
-//   telefone: FormControl;
-//   senha: FormControl;
-//   confirmaSenha: FormControl;
-// }
-//
-// @Component({
-//   selector: 'app-cadastro',
-//   standalone: true,
-//   imports: [
-//     DefaultLoginLayoutComponent,
-//     ReactiveFormsModule,
-//     PrimaryInputComponent,
-//     CommonModule
-//   ],
-//   providers: [LoginService],
-//   templateUrl: './cadastro.component.html',
-//   styleUrl: './cadastro.component.scss'
-// })
-// export class CadastroComponent implements OnInit {  // 🔵 Agora implementa OnInit
-//   cadastroForm!: FormGroup<CadastroForm>;
-//   categorias: string[] = []; // 🔵 Adicionei variável
-//
-//   constructor(
-//     private router: Router,
-//     private loginService: LoginService,
-//     private toastService: ToastrService,
-//     private instituicaoService: InstituicaoService
-//   ) {
-//     this.cadastroForm = new FormGroup({
-//       email: new FormControl('', [Validators.required]),
-//       cnpj: new FormControl('', [Validators.required]),
-//       nomeInstituicao: new FormControl('', [Validators.required]),
-//       categoria: new FormControl('', [Validators.required]),
-//       endereco: new FormControl('', [Validators.required]),
-//       telefone: new FormControl('', [Validators.required]),
-//       senha: new FormControl('', [Validators.required]),
-//       confirmaSenha: new FormControl('', [Validators.required])
-//     })
-//   }
-//
-//   ngOnInit() {
-//     this.instituicaoService.getCategorias().subscribe(categorias => {
-//       this.categorias = categorias;
-//     });
-//   }
-//
-//   submit(){
-//     this.loginService.cadastro(
-//       this.cadastroForm.value.nomeInstituicao,
-//       this.cadastroForm.value.email,
-//       this.cadastroForm.value.senha,
-//       this.cadastroForm.value.cnpj,
-//       this.cadastroForm.value.endereco,
-//       this.cadastroForm.value.telefone,
-//       this.cadastroForm.value.categoria
-//     ).subscribe({
-//       next:() => this.toastService.success("Cadastro realizado com sucesso"),
-//       error:() => this.toastService.error("Erro inesperado! Tente novamente mais tarde.")
-//     })
-//   }
-//
-//   navigate(){
-//     this.router.navigate(["/login"])
-//   }
-// }
-import { DefaultLoginLayoutComponent } from "../../components/default-login-layout/default-login-layout.component";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { PrimaryInputComponent } from "../../components/primary-input/primary-input.component";
-import { Router } from "@angular/router";
-import { LoginService } from "../../services/login.service";
-import { ToastrService } from "ngx-toastr";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-import { InstituicaoService } from "../../services/instituicao.service";
 
-interface CadastroForm {
-  email: FormControl;
-  cnpj: FormControl;
-  nomeInstituicao: FormControl;
-  categoria: FormControl;
-  endereco: FormControl;
-  telefone: FormControl;
-  senha: FormControl;
-  confirmaSenha: FormControl;
-}
+import { InstituicaoService } from '../../services/instituicao.service';
+import { LoginService } from '../../services/login.service';
+import { DefaultLoginLayoutComponent } from '../../components/default-login-layout/default-login-layout.component';
+import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [
-    DefaultLoginLayoutComponent,
-    ReactiveFormsModule,
-    PrimaryInputComponent,
-    CommonModule
-  ],
-  providers: [LoginService],
   templateUrl: './cadastro.component.html',
-  styleUrl: './cadastro.component.scss'
+  styleUrl: './cadastro.component.scss',
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DefaultLoginLayoutComponent,
+    PrimaryInputComponent
+  ],
+  providers: [LoginService]
 })
 export class CadastroComponent implements OnInit {
-  cadastroForm!: FormGroup<CadastroForm>;
+  cadastroForm!: FormGroup;
   categorias: string[] = [];
+  disableBtn = false;
+  primaryText = 'Cadastrar';
 
   constructor(
     private router: Router,
@@ -124,67 +35,80 @@ export class CadastroComponent implements OnInit {
     private instituicaoService: InstituicaoService
   ) {
     this.cadastroForm = new FormGroup({
-      email: new FormControl('', [Validators.required]),
-      cnpj: new FormControl('', [Validators.required]),
-      nomeInstituicao: new FormControl('', [Validators.required]),
-      categoria: new FormControl('', [Validators.required]),
-      endereco: new FormControl('', [Validators.required]),
-      telefone: new FormControl('', [Validators.required]),
-      senha: new FormControl('', [Validators.required]),
-      confirmaSenha: new FormControl('', [Validators.required])
+      email: new FormControl('', [Validators.required, Validators.email]),
+      cnpj: new FormControl('', Validators.required),
+      nomeInstituicao: new FormControl('', Validators.required),
+      categoria: new FormControl<string | null>(null, Validators.required),
+      endereco: new FormControl('', Validators.required),
+      telefone: new FormControl('', Validators.required),
+      senha: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      confirmaSenha: new FormControl('', Validators.required)
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.instituicaoService.getCategorias().subscribe(categorias => {
       this.categorias = categorias;
     });
-
-    // 🔵 Mantém a checagem de senhas enquanto digita
-    this.cadastroForm.valueChanges.subscribe(() => {
-      this.senhasIguaisValidator(this.cadastroForm);
-    });
   }
 
-  submit() {
-    const senha = this.cadastroForm.get('senha')?.value;
-    const confirmaSenha = this.cadastroForm.get('confirmaSenha')?.value;
-
-    // 🔵 Valida antes de tentar cadastrar
-    if (senha !== confirmaSenha) {
-      this.toastService.error("As senhas não coincidem!");
-      return; // 🔵 Para tudo se estiver errado
+  submit(): void {
+    if (this.cadastroForm.invalid) {
+      this.cadastroForm.markAllAsTouched();
+      this.toastService.error('Preencha todos os campos corretamente!');
+      return;
     }
 
-    // 🔵 Se senhas forem iguais, prossegue para cadastro
+    const {
+      senha,
+      confirmaSenha,
+      nomeInstituicao,
+      email,
+      cnpj,
+      endereco,
+      telefone,
+      categoria
+    } = this.cadastroForm.value;
+
+    if (senha !== confirmaSenha) {
+      this.toastService.error('As senhas não coincidem!');
+      return;
+    }
+
     this.loginService.cadastro(
-      this.cadastroForm.value.nomeInstituicao,
-      this.cadastroForm.value.email,
-      this.cadastroForm.value.senha,
-      this.cadastroForm.value.cnpj,
-      this.cadastroForm.value.endereco,
-      this.cadastroForm.value.telefone,
-      this.cadastroForm.value.categoria
+      nomeInstituicao!,
+      email!,
+      senha!,
+      cnpj!,
+      endereco!,
+      telefone!,
+      categoria!
     ).subscribe({
-      next: () => this.toastService.success("Cadastro realizado com sucesso"),
-      error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde.")
+      next: () => {
+        this.toastService.success('Cadastro realizado com sucesso!');
+        setTimeout(() => this.router.navigate(['/login']), 2000);
+      },
+      error: (err) => {
+        const mensagem = err.error?.mensagem || err.error?.message || 'Erro inesperado!';
+        if (mensagem.includes('Email já cadastrado')) {
+          this.toastService.error('Este e-mail já está em uso.');
+        } else if (mensagem.includes('CNPJ já cadastrado')) {
+          this.toastService.error('Este CNPJ já está cadastrado.');
+        } else {
+          this.toastService.error(mensagem);
+        }
+        this.resetBtn();
+      },
+      complete: () => this.resetBtn()
     });
   }
 
-  navigate() {
-    this.router.navigate(["/login"]);
+  resetBtn(): void {
+    this.primaryText = 'Cadastrar';
+    this.disableBtn = false;
   }
 
-  // 🔵 Validação personalizada para senha == confirmaSenha enquanto digita
-  senhasIguaisValidator(form: FormGroup) {
-    const senha = form.get('senha')?.value;
-    const confirmaSenha = form.get('confirmaSenha')?.value;
-
-    if (senha !== confirmaSenha) {
-      form.get('confirmaSenha')?.setErrors({ senhasDiferentes: true });
-    } else {
-      form.get('confirmaSenha')?.setErrors(null);
-    }
+  navigate(): void {
+    this.router.navigate(['/login']);
   }
 }
-

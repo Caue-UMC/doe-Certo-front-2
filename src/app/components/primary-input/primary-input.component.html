@@ -2,13 +2,22 @@
   <label [for]="inputName">{{ label }}</label>
   <div class="input-content">
     <input
+      [id]="inputName"
       [type]="type"
       [placeholder]="placeholder"
       [value]="value"
-      (input)="onInput($event)"
+      [disabled]="disabled"
+      (input)="handleInput($event)"
     />
     <div class="icon">
       <ng-content></ng-content>
     </div>
+  </div>
+
+  <!-- Exibição de mensagens de erro -->
+  <div class="error" *ngIf="formControl?.touched && formControl?.invalid">
+    <span *ngIf="formControl.errors?.['required']">Campo obrigatório</span>
+    <span *ngIf="formControl.errors?.['email']">Email inválido</span>
+    <span *ngIf="formControl.errors?.['minlength']">Mínimo de 6 caracteres</span>
   </div>
 </div>
