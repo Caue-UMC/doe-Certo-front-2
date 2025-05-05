@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DefaultLoginLayoutComponent } from '../../components/default-login-layout/default-login-layout.component';
 import { FormControl, FormGroup, FormRecord, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,7 +17,8 @@ interface LoginForm {
   imports: [
     DefaultLoginLayoutComponent,
     ReactiveFormsModule,
-    PrimaryInputComponent
+    PrimaryInputComponent,
+    RouterLink
   ],
   providers: [
     LoginService
@@ -52,8 +53,6 @@ export class LoginComponent {
         this.toastService.success("Login feito com sucesso!");
         this.router.navigate(['/instituicao']);
       },
-
-      error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
     });
   }
 

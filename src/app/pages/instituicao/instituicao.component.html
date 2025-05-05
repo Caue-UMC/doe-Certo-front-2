@@ -1,5 +1,5 @@
 <div class="dashboard-container">
-  <!-- Sidebar -->
+  <!-- Sidebar da instituição -->
   <aside class="sidebar">
     <div class="perfil">
       <img *ngIf="imagemBase64" [src]="'data:image/jpeg;base64,' + imagemBase64" alt="Foto da instituição" />
@@ -8,30 +8,57 @@
     </div>
   </aside>
 
-  <!-- Conteúdo principal -->
+  <!-- Área principal com a lista -->
   <main class="conteudo">
     <div class="header">
       <h2>Lista de Necessidades</h2>
       <button class="btn-adicionar" (click)="abrirModal()">+ Adicionar Item</button>
     </div>
 
+    <!-- Aviso sobre edição inline -->
+    <div class="aviso-edicao">
+      <p>🔔 Para editar, clique no botão e altere os campos diretamente. Clique em "Salvar" para confirmar.</p>
+    </div>
+
+    <!-- Tabela com a lista de produtos -->
     <table class="tabela">
       <thead>
       <tr>
         <th>Produto</th>
         <th>Descrição</th>
-        <th>Nivel de necessidade</th>
+        <th>Nível de necessidade</th>
         <th>Ações</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let item of produtos">
-        <td>{{ item.nome }}</td>
-        <td>{{ item.descricao }}</td>
-        <td>{{ item.status }}</td>
         <td>
-          <button class="btn-acao editar">Editar</button>
-          <button class="btn-acao excluir">Excluir</button>
+          <input *ngIf="item.editando" [(ngModel)]="item.nome" class="form-input" />
+          <span *ngIf="!item.editando">{{ item.nome }}</span>
+        </td>
+        <td>
+          <input *ngIf="item.editando" [(ngModel)]="item.descricao" class="form-input" />
+          <span *ngIf="!item.editando">{{ item.descricao }}</span>
+        </td>
+        <td>
+          <select *ngIf="item.editando" [(ngModel)]="item.statusProduto" class="form-input">
+            <option *ngFor="let status of statusOptions" [value]="status">
+              {{ status | lowercase | titlecase }}
+            </option>
+          </select>
+          <span *ngIf="!item.editando">{{ item.statusProduto }}</span>
+        </td>
+        <td>
+          <!-- Ações -->
+          <ng-container *ngIf="!item.editando">
+            <button class="btn-acao editar" (click)="item.editando = true">Editar</button>
+            <button class="btn-acao excluir" (click)="abrirModalSenha(item, 'excluir')">Excluir</button>
+          </ng-container>
+
+          <ng-container *ngIf="item.editando">
+            <button class="btn-acao salvar" (click)="abrirModalSenha(item, 'editar')">Salvar</button>
+            <button class="btn-acao cancelar" (click)="cancelarEdicao(item)">Cancelar</button>
+          </ng-container>
         </td>
       </tr>
       </tbody>
@@ -39,7 +66,7 @@
   </main>
 </div>
 
-<!-- Modal -->
+<!-- Modal para cadastro de novo item -->
 <div class="modal-backdrop" *ngIf="mostrarModal">
   <div class="modal">
     <h2>Novo Item</h2>
@@ -60,6 +87,26 @@
     <div class="modal-actions">
       <button class="btn-secondary" (click)="fecharModal()">Cancelar</button>
       <button class="btn-salvar" (click)="salvarItem()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de senha para confirmar edição/exclusão -->
+<div class="modal-backdrop" *ngIf="mostrarModalSenha">
+  <div class="modal-content">
+    <h2>Confirmação de Senha</h2>
+    <p>Digite sua senha para confirmar a ação.</p>
+
+    <input
+      type="password"
+      [(ngModel)]="senhaConfirmacao"
+      placeholder="Senha"
+      class="form-input"
+    />
+
+    <div class="modal-buttons">
+      <button class="btn btn-secondary" (click)="cancelarModalSenha()">Cancelar</button>
+      <button class="btn btn-danger" (click)="confirmarAcao()">Confirmar</button>
     </div>
   </div>
 </div>

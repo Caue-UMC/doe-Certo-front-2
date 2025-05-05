@@ -1,3 +1,59 @@
+$primary: #007BFF;
+$success: #28a745;
+$danger: #dc3545;
+$warning-bg: #fff3cd;
+$warning-text: #856404;
+$warning-border: #ffeeba;
+$gray-dark: #6c757d;
+$gray-darker: #565e64;
+$shadow: rgba(0, 0, 0, 0.1);
+$modal-shadow: rgba(0, 0, 0, 0.2);
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  outline: none;
+  font-size: 15px;
+  background-color: #f9f9f9;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+  }
+}
+
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.btn-danger {
+  background-color: $danger;
+  color: white;
+
+  &:hover {
+    background-color: darken($danger, 10%);
+  }
+}
+
+.btn-secondary {
+  background-color: $gray-dark;
+  color: white;
+
+  &:hover {
+    background-color: $gray-darker;
+  }
+}
+
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -5,106 +61,145 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
+// Sidebar
 .sidebar {
   width: 260px;
-  background-color: #007BFF;
+  background-color: $primary;
   color: white;
   padding: 30px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .perfil {
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+  }
+
+  .btn-seta {
+    background: white;
+    color: $primary;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
 }
 
-.perfil img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  margin-bottom: 12px;
-}
-
-.perfil h3 {
-  text-align: center;
-  font-size: 18px;
-  margin-bottom: 12px;
-}
-
-.btn-seta {
-  background: white;
-  color: #007BFF;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-}
-
+// Conteúdo principal
 .conteudo {
   flex: 1;
   padding: 40px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+
+    .btn-adicionar {
+      background-color: $success;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+
+      &:hover {
+        background-color: darken($success, 7%);
+      }
+    }
+  }
+
+  .aviso-edicao {
+    background-color: $warning-bg;
+    color: $warning-text;
+    border: 1px solid $warning-border;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px $shadow;
+
+    th, td {
+      padding: 14px;
+      text-align: left;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 6px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #fff;
+      box-sizing: border-box;
+    }
+  }
+
+  .btn-acao {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    margin-right: 6px;
+    font-size: 14px;
+    cursor: pointer;
+
+    &.editar {
+      background-color: #ffc107;
+      color: white;
+    }
+
+    &.excluir {
+      background-color: $danger;
+      color: white;
+    }
+
+    &.salvar {
+      background-color: $success;
+      color: white;
+    }
+
+    &.cancelar {
+      background-color: $gray-dark;
+      color: white;
+    }
+  }
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-}
-
-.btn-adicionar {
-  background-color: #28a745;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.btn-adicionar:hover {
-  background-color: #218838;
-}
-
-.tabela {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.tabela th, .tabela td {
-  padding: 14px;
-  text-align: left;
-  border-bottom: 1px solid #eaeaea;
-}
-
-.tabela th {
-  background-color: #f8f9fa;
-  font-weight: bold;
-}
-
-.btn-acao {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  margin-right: 6px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.btn-acao.editar {
-  background-color: #ffc107;
-  color: white;
-}
-
-.btn-acao.excluir {
-  background-color: #dc3545;
-  color: white;
-}
-
+// Modal backdrop (cadastro e senha)
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -118,65 +213,52 @@
   z-index: 1000;
 }
 
-.modal {
+// Modal base (cadastro e confirmação de senha)
+.modal,
+.modal-content {
   background-color: white;
-  padding: 25px;
+  padding: 30px 25px;
   border-radius: 12px;
   max-width: 400px;
   width: 90%;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  box-shadow: 0 6px 16px $modal-shadow;
+  animation: fadeIn 0.3s ease-in-out;
+
+  h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: $primary;
+  }
+
+  p {
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  input,
+  select,
+  .form-control {
+    @extend .form-input;
+  }
+
+  .modal-actions,
+  .modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 20px;
+  }
 }
 
-.modal h2 {
-  margin-bottom: 15px;
-  font-size: 20px;
-}
-
-.modal label {
-  display: block;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 5px;
-}
-
-.modal .form-control {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.btn-salvar {
-  background-color: #28a745;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.btn-salvar:hover {
-  background-color: #218838;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.btn-secondary:hover {
-  background-color: #565e64;
+// Animação leve de entrada
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

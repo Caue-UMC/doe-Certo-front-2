@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-
 import { InstituicaoService } from '../../services/instituicao.service';
 import { LoginService } from '../../services/login.service';
 import { DefaultLoginLayoutComponent } from '../../components/default-login-layout/default-login-layout.component';
@@ -86,7 +85,7 @@ export class CadastroComponent implements OnInit {
     ).subscribe({
       next: () => {
         this.toastService.success('Cadastro realizado com sucesso!');
-        setTimeout(() => this.router.navigate(['/login']), 2000);
+        setTimeout(() => this.router.navigate(['/login']), 1300);
       },
       error: (err) => {
         const mensagem = err.error?.mensagem || err.error?.message || 'Erro inesperado!';

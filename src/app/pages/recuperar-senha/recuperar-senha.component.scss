@@ -1,0 +1,90 @@
+.user-container {
+  max-width: 450px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #007BFF;
+}
+
+.input-wrapper {
+  margin-bottom: 20px;
+
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    font-size: 15px;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+    }
+  }
+}
+
+.error-message {
+  color: red;
+  font-size: 13px;
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.salvar {
+  background-color: #007BFF;
+  color: white;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+
+  &:hover {
+    background-color: #565e64;
+  }
+}

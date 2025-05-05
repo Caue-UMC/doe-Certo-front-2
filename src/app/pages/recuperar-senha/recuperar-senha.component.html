@@ -1,0 +1,19 @@
+<div class="user-container">
+  <h2>Recuperar Senha</h2>
+
+  <form [formGroup]="form" (ngSubmit)="enviar()">
+    <div class="input-wrapper">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" class="form-input" />
+    </div>
+
+    <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="error-message">
+      Informe um email válido.
+    </div>
+
+    <div class="btn-group">
+      <button type="submit" class="btn salvar" [disabled]="form.invalid">Enviar</button>
+      <button type="button" class="btn btn-secondary" (click)="voltar()">Voltar</button>
+    </div>
+  </form>
+</div>

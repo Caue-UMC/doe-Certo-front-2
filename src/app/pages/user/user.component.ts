@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { InstituicaoService } from '../../services/instituicao.service';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user',
@@ -29,7 +30,8 @@ export class UserComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private instituicaoService: InstituicaoService
+    private instituicaoService: InstituicaoService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -41,7 +43,7 @@ export class UserComponent implements OnInit {
       cnpj: ['', Validators.required],
       telefone: ['', Validators.required],
       endereco: ['', Validators.required],
-      categoria: ['']
+      categoria: ['', Validators.required]
     });
 
     const headers = new HttpHeaders({
@@ -51,7 +53,7 @@ export class UserComponent implements OnInit {
     this.http.get<any>(`http://localhost:8080/instituicoes/${this.id}`, { headers })
       .subscribe(data => {
         this.form.patchValue(data);
-        this.imagemBase64 = data.imagemPerfil; // <- pega imagem do banco
+        this.imagemBase64 = data.imagemPerfil;
       });
 
     this.instituicaoService.getCategorias().subscribe(categorias => {
@@ -65,7 +67,7 @@ export class UserComponent implements OnInit {
 
   enviarImagem() {
     if (!this.imagemSelecionada) {
-      alert('Selecione uma imagem antes de enviar.');
+      this.toastr.error('Selecione uma imagem antes de enviar.');
       return;
     }
 
@@ -78,14 +80,28 @@ export class UserComponent implements OnInit {
 
     this.http.put(`http://localhost:8080/instituicoes/${this.id}/imagem`, formData, { headers })
       .subscribe(() => {
-        alert('Imagem atualizada com sucesso!');
+        this.toastr.success('Imagem atualizada com sucesso!');
         const reader = new FileReader();
         reader.onload = () => {
           this.imagemBase64 = (reader.result as string).split(',')[1];
         };
         reader.readAsDataURL(this.imagemSelecionada);
       }, err => {
-        alert('Erro ao enviar imagem.');
+        this.toastr.error('Erro ao enviar imagem.');
+      });
+  }
+
+  removerImagem() {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('auth-token')
+    });
+
+    this.http.put(`http://localhost:8080/instituicoes/${this.id}/imagem`, {}, { headers })
+      .subscribe(() => {
+        this.imagemBase64 = '';
+        this.toastr.success('Imagem removida com sucesso!');
+      }, err => {
+        this.toastr.error('Erro ao remover imagem.');
       });
   }
 
@@ -102,6 +118,11 @@ export class UserComponent implements OnInit {
   }
 
   confirmarSenha() {
+    if (this.form.invalid) {
+      this.toastr.warning('Preencha todos os campos corretamente.');
+      return;
+    }
+
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('auth-token')
     });
@@ -118,10 +139,10 @@ export class UserComponent implements OnInit {
 
       this.http.put(`http://localhost:8080/instituicoes/${this.id}`, payload, { headers })
         .subscribe(() => {
-          alert('Dados atualizados com sucesso!');
+          this.toastr.success('Dados atualizados com sucesso!');
           this.cancelarModal();
         }, err => {
-          alert('Erro ao atualizar: ' + err.error);
+          this.toastr.error(err.error || 'Erro ao atualizar dados.');
         });
 
     } else if (this.tipoAcao === 'excluir') {
@@ -130,11 +151,11 @@ export class UserComponent implements OnInit {
         body: { senha: this.senhaConfirmacao }
       }).subscribe(() => {
         sessionStorage.clear();
-        alert('Conta excluída com sucesso!');
+        this.toastr.success('Conta excluída com sucesso!');
         this.router.navigate(['/login']);
         this.cancelarModal();
       }, err => {
-        alert('Erro ao excluir: ' + err.error);
+        this.toastr.error(err.error || 'Erro ao excluir conta.');
       });
     }
   }

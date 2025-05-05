@@ -82,14 +82,10 @@ export class AlterarSenhaComponent implements OnInit {
           this.router.navigate(['/user']);
         }, 1500);
       },
-      error: (error) => {
-        if (error.status === 401) {
-          this.toastService.error('Senha atual incorreta.');
-        } else {
-          this.toastService.error('Erro inesperado. Tente novamente.');
-        }
-      }
     });
+  }
+  voltarParaUser() {
+    this.router.navigate(['/user']);
   }
 }
 

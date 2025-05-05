@@ -1,0 +1,17 @@
+<div class="container">
+  <h2>Redefinir Senha</h2>
+
+  <form [formGroup]="form" (ngSubmit)="redefinirSenha()">
+    <label>Nova Senha</label>
+    <input type="password" formControlName="novaSenha" placeholder="Digite a nova senha" />
+
+    <label>Confirmar Nova Senha</label>
+    <input type="password" formControlName="confirmaSenha" placeholder="Confirme a nova senha" />
+
+    <div class="error" *ngIf="form.errors?.['senhasDiferentes'] && (form.dirty || form.touched)">
+      As senhas não coincidem.
+    </div>
+
+    <button class="btn" type="submit" [disabled]="form.invalid">Redefinir Senha</button>
+  </form>
+</div>

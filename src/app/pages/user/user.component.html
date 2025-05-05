@@ -8,10 +8,14 @@
       <img *ngIf="imagemBase64" [src]="'data:image/jpeg;base64,' + imagemBase64" alt="Imagem de Perfil" class="imagem-perfil" />
     </div>
 
-    <!-- Upload de nova imagem -->
+    <!-- Upload de nova imagem e remover -->
     <div class="upload-container">
       <input type="file" accept="image/*" (change)="selecionarImagem($event)" />
-      <button type="button" class="btn salvar" (click)="enviarImagem()">Enviar Imagem</button>
+
+      <div class="btn-group" style="margin-top: 10px; gap: 10px;">
+        <button type="button" class="btn salvar" (click)="enviarImagem()">Enviar Imagem</button>
+        <button *ngIf="imagemBase64" type="button" class="btn excluir" (click)="removerImagem()">Remover Imagem</button>
+      </div>
     </div>
 
     <label for="nomeInstituicao">Nome da Instituição</label>
@@ -28,14 +32,14 @@
       <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
     </select>
 
-    <div class="btn-group">
+    <div class="btn-group" style="gap: 10px;">
       <button type="button" class="btn salvar" (click)="abrirModalSenha('editar')">Salvar alterações</button>
       <button type="button" class="btn excluir" (click)="abrirModalSenha('excluir')">Excluir conta</button>
       <button type="button" class="btn alterar-senha" (click)="irParaAlterarSenha()">Alterar Senha</button>
     </div>
   </form>
 
-  <!-- Modal -->
+  <!-- Modal de senha -->
   <div class="modal-backdrop" *ngIf="mostrarModalSenha">
     <div class="modal-content">
       <h2>Confirmação de Senha</h2>
@@ -48,7 +52,7 @@
         class="form-control"
       />
 
-      <div class="modal-buttons">
+      <div class="modal-buttons" style="gap: 10px;">
         <button class="btn btn-secondary" (click)="cancelarModal()">Cancelar</button>
         <button class="btn btn-danger" (click)="confirmarSenha()">Confirmar</button>
       </div>

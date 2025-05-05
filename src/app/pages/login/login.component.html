@@ -25,7 +25,10 @@
       <img src="/assets/svg/senha-icon.svg">
     </app-primary-input>
 
-    <span style="color: #049DD9">Esqueceu sua senha?</span>
+    <a [routerLink]="['/recuperar-senha']" style="color: #049DD9; text-decoration: underline; cursor: pointer;">
+      Esqueceu sua senha?
+    </a>
+
 
     <button type="submit" class="btn-primary" [disabled]="!loginForm.valid">
       Entrar
