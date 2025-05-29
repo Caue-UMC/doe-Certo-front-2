@@ -1,0 +1,111 @@
+.sidebar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none; // não atrapalha o resto do layout
+
+  .hover-zone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 100vh;
+    z-index: 11;
+    cursor: pointer;
+    pointer-events: auto;
+    background: linear-gradient(to bottom, #00aaff, #f24182); // borda com gradiente
+  }
+
+  .sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(to bottom, #00aaff, #f24182);
+    color: white;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 12;
+    pointer-events: auto;
+
+    .perfil {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid white;
+        margin-bottom: 12px;
+      }
+
+      h2 {
+        font-size: 18px;
+        text-align: center;
+        word-wrap: break-word;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      li {
+        margin: 6px 0;
+
+        a {
+          color: white;
+          text-decoration: none;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          width: 100%;
+          padding: 10px 16px;
+          border-radius: 8px;
+          transition: background-color 0.2s ease, color 0.2s ease;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+          }
+        }
+
+        &.logout {
+          margin-top: auto;
+
+          a {
+            background-color: transparent;
+            color: white;
+            transition: background-color 0.2s ease, color 0.2s ease;
+
+            &:hover {
+              background-color: #ffe6e6;
+              color: #d63031;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Quando passar o mouse em qualquer parte do wrapper, ativa a sidebar
+  &:hover .sidebar {
+    transform: translateX(0);
+  }
+}

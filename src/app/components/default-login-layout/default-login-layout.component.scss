@@ -48,6 +48,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  margin-bottom: 24px;
 }
 
 .btn-wrapper {
@@ -58,7 +59,6 @@ main {
   align-items: center;
   justify-content: center;
   gap: 10px;
-
 
   .divider {
     display: flex;
@@ -75,37 +75,62 @@ main {
       height: 2px;
       background-color: black;
     }
+
+    span {
+      color: black;
+    }
+  }
+}
+
+// BOTÕES ESTILIZADOS GLOBALMENTE
+
+button.btn-primary {
+  background-color: #F24182;
+  color: white;
+  box-shadow: 0px 8px 12px rgba(148, 64, 255, 0.2);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  padding: 12px 24px;
+  width: 100%;
+  max-width: 450px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
   }
 
-  button {
-    width: 100%;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
-    border: none;
-    padding: 12px 24px;
-    cursor: pointer;
-    transition: 0.3s;
+  &:hover {
+    opacity: 0.9;
+    transform: scale(1.01);
+  }
+}
 
-    &.btn-primary {
-      background-color: #F24182;
-      color: white;
-      box-shadow: 0px 8px 12px rgba(148, 64, 255, 0.2);
-    }
 
-    &.btn-secondary {
-      border: 1px solid #049DD9;
-      color: #049DD9;
-      background: transparent;
-    }
+button.btn-secondary {
+  border: 1px solid #049DD9;
+  color: #049DD9;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 24px;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.3s;
 
-    &:disabled {
-      opacity: 0.8;
-    }
+  &:hover {
+    background-color: #049DD9;
+    color: white;
+    transform: scale(1.01);
+  }
 
-    &:hover {
-      opacity: 0.9;
-      transform: scale(1.01);
-    }
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
   }
 }

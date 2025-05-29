@@ -1,0 +1,21 @@
+<div class="sidebar-wrapper">
+  <div class="hover-zone"></div>
+
+  <nav class="sidebar">
+    <div class="perfil">
+      <img
+        [src]="imagemAdmin"
+        alt="Foto do administrador"
+      />
+      <h2>{{ nomeAdmin }}</h2>
+    </div>
+
+    <ul>
+      <li><a (click)="gerenciarInstituicoes()"><img src="assets/png/editar-icon.png" alt="Instituições" /> Gerenciar Instituições</a></li>
+      <li><a (click)="verGraficos()"><img src="assets/png/grafico-icon.png" alt="Dashboard" /> Painel de Gráficos</a></li>
+      <li><a (click)="voltar()"><img src="assets/png/voltar-icon.png" alt="Voltar" /> Voltar</a></li>
+      <li><a (click)="voltarParaHome()"><img src="assets/png/home-icon.png" alt="Home" /> Voltar para tela inicial</a></li>
+      <li class="logout"><a (click)="sair()"><img src="assets/png/sair-do-usuario.png" alt="Sair" /> Sair</a></li>
+    </ul>
+  </nav>
+</div>

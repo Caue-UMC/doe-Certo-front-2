@@ -1,0 +1,41 @@
+<div id="dashboard-relatorio" class="dashboard-container">
+  <h2 class="titulo-dashboard">Painel Administrativo</h2>
+
+  <div class="cards-info">
+    <div class="card-info">
+      <h3>Total de Instituições</h3>
+      <p>{{ totalInstituicoes }}</p>
+    </div>
+    <div class="card-info">
+      <h3>Campanhas Ativas</h3>
+      <p>{{ campanhasAtivas }}</p>
+    </div>
+    <div class="card-info">
+      <h3>Campanhas Inativas</h3>
+      <p>{{ campanhasInativas }}</p>
+    </div>
+  </div>
+
+  <div class="graficos">
+    <div class="grafico">
+      <h4>Distribuição de Campanhas</h4>
+      <canvas baseChart
+              [data]="pieChartData"
+              [type]="pieChartType">
+      </canvas>
+    </div>
+
+    <div class="grafico">
+      <h4>Status dos Itens</h4>
+      <canvas baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [type]="'bar'">
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<div class="botoes-pdf">
+  <button (click)="exportarPDF()">Exportar como PDF</button>
+</div>

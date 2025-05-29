@@ -1,0 +1,196 @@
+<div class="pagina-edicao-campanha">
+  <div class="dashboard-container">
+    <app-sidebar></app-sidebar>
+    <main class="conteudo">
+      <h2 class="titulo-pagina">Minhas Campanhas</h2>
+      <div class="header">
+        <button class="btn-adicionar" (click)="abrirModal()">+ Nova Campanha</button>
+      </div>
+      <div class="aviso-edicao">
+        <p>🔔 Para editar, clique no botão e altere os campos diretamente. Clique em "Salvar" para confirmar.</p>
+      </div>
+      <div *ngIf="campanhas.length === 0" class="aviso-edicao">
+        <p>🔔 Nenhuma campanha cadastrada ainda.</p>
+      </div>
+
+      <table class="tabela" *ngIf="campanhas.length > 0">
+        <thead>
+        <tr>
+          <th>Imagem</th><th>Nome</th><th>Descrição</th>
+          <th>Período</th><th>Status</th><th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let c of campanhas">
+          <td>
+            <img
+              [src]="c.imagemCampanha ? 'data:image/jpeg;base64,'+c.imagemCampanha : 'assets/png/imagem-campanha-padrao.png'"
+              class="imagem-campanha"
+            />
+          </td>
+          <td>
+            <input *ngIf="c.editando" [(ngModel)]="c.nome" class="form-input" [ngClass]="{'invalid':!c.nome?.trim()}"/>
+            <span *ngIf="!c.editando">{{c.nome}}</span>
+          </td>
+          <td>
+            <input *ngIf="c.editando" [(ngModel)]="c.descricao" class="form-input" [ngClass]="{'invalid':!c.descricao?.trim()}"/>
+            <span *ngIf="!c.editando">{{c.descricao}}</span>
+          </td>
+          <td>
+            <div *ngIf="c.editando">
+              <input type="date" [(ngModel)]="c.dataInicio" class="form-input" [ngClass]="{'invalid':!c.dataInicio}"/> até
+              <input type="date" [(ngModel)]="c.dataFim" class="form-input" [ngClass]="{'invalid':!c.dataFim}"/>
+            </div>
+            <span *ngIf="!c.editando">{{c.dataInicio}} até {{c.dataFim}}</span>
+          </td>
+          <td>
+            <select *ngIf="c.editando" [(ngModel)]="c.ativa" class="form-input">
+              <option [ngValue]="true">Ativa</option>
+              <option [ngValue]="false">Inativa</option>
+            </select>
+            <span *ngIf="!c.editando">{{c.ativa?'Ativa':'Inativa'}}</span>
+          </td>
+          <td>
+            <ng-container *ngIf="!c.editando">
+              <button class="btn-acao editar" (click)="editarCampanha(c)">Editar</button>
+              <button class="btn-acao excluir" (click)="abrirModalSenha(c,'excluir')">Excluir</button>
+            </ng-container>
+            <ng-container *ngIf="c.editando">
+              <button class="btn-acao salvar" (click)="abrirModalSenha(c,'editar')">Salvar</button>
+              <button class="btn-acao cancelar" (click)="cancelarEdicao(c)">Cancelar</button>
+              <button class="btn-acao editar" (click)="abrirModalImagem()">Alterar/Remover Imagem</button>
+
+              <div class="form-check checkbox-editar">
+                <label>
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="c.usarEnderecoInstituicao"
+                    (change)="aoAlterarCheckboxEndereco(c)"
+                  />
+                  Usar endereço da instituição
+                </label>
+              </div>
+
+              <div *ngIf="!c.usarEnderecoInstituicao">
+                <label>CEP</label>
+                <input
+                  type="text"
+                  [(ngModel)]="c.endereco.cep"
+                  mask="00000-000"
+                  (input)="aoDigitarCepEdicao(c)"
+                  class="form-input"
+                  [ngClass]="{'invalid':c.validacaoEndereco?.cepVazio}"
+                />
+                <label>Rua</label>
+                <input type="text" [(ngModel)]="c.endereco.rua" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.ruaVazia}"/>
+                <label>Número</label>
+                <input type="text" [(ngModel)]="c.endereco.numero" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.numeroVazio}"/>
+                <label>Complemento</label>
+                <input type="text" [(ngModel)]="c.endereco.complemento" class="form-input"/>
+                <label>Bairro</label>
+                <input type="text" [(ngModel)]="c.endereco.bairro" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.bairroVazio}"/>
+                <label>Cidade</label>
+                <input type="text" [(ngModel)]="c.endereco.cidade" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.cidadeVazia}"/>
+                <label>Estado</label>
+                <input type="text" maxlength="2" [(ngModel)]="c.endereco.uf" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.ufVazia}"/>
+              </div>
+            </ng-container>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <!-- Modal Nova Campanha -->
+  <div class="modal-backdrop" *ngIf="mostrarModal">
+    <div class="modal">
+      <h2>Nova Campanha</h2>
+      <label>Nome</label>
+      <input type="text" [(ngModel)]="novoItem.nome" class="form-control" [ngClass]="{'invalid':nomeVazio}"/>
+      <label>Descrição</label>
+      <textarea [(ngModel)]="novoItem.descricao" class="form-control" [ngClass]="{'invalid':descricaoVazia}"></textarea>
+      <label>Data de Início</label>
+      <input type="date" [(ngModel)]="novoItem.dataInicio" class="form-control" [ngClass]="{'invalid':dataInicioVazia}"/>
+      <label>Data de Fim</label>
+      <input type="date" [(ngModel)]="novoItem.dataFim" class="form-control" [ngClass]="{'invalid':dataFimVazia}"/>
+
+      <div class="form-check">
+        <label>
+          <input
+            type="checkbox"
+            [(ngModel)]="novoItem.usarEnderecoInstituicao"
+            (change)="aoAlterarCheckboxEndereco(novoItem)"
+          />
+          Usar endereço da instituição
+        </label>
+      </div>
+
+      <div *ngIf="!novoItem.usarEnderecoInstituicao">
+        <label>CEP</label>
+        <input
+          type="text"
+          [(ngModel)]="novoItem.endereco.cep"
+          mask="00000-000"
+          (input)="aoDigitarCep()"
+          class="form-control"
+          [ngClass]="{'invalid':cepVazio}"
+        />
+        <label>Rua</label>
+        <input type="text" [(ngModel)]="novoItem.endereco.rua" class="form-control" [ngClass]="{'invalid':ruaVazia}"/>
+        <label>Número</label>
+        <input type="text" [(ngModel)]="novoItem.endereco.numero" class="form-control" [ngClass]="{'invalid':numeroVazio}"/>
+        <label>Complemento</label>
+        <input type="text" [(ngModel)]="novoItem.endereco.complemento" class="form-control"/>
+        <label>Bairro</label>
+        <input type="text" [(ngModel)]="novoItem.endereco.bairro" class="form-control" [ngClass]="{'invalid':bairroVazio}"/>
+        <label>Cidade</label>
+        <input type="text" [(ngModel)]="novoItem.endereco.cidade" class="form-control" [ngClass]="{'invalid':cidadeVazia}"/>
+        <label>Estado</label>
+        <input type="text" maxlength="2" [(ngModel)]="novoItem.endereco.uf" class="form-control" [ngClass]="{'invalid':ufVazia}"/>
+      </div>
+
+      <label>Imagem (opcional)</label>
+      <input type="file" (change)="selecionarImagemCampanha($event)" class="form-control" accept="image/*"/>
+      <div class="imagem-preview" *ngIf="imagemPreview">
+        <img [src]="imagemPreview" alt="Prévia"/>
+        <button class="btn remover" (click)="removerImagemCampanha()">Remover Imagem</button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="fecharModal()">Cancelar</button>
+        <button class="btn btn-salvar" (click)="salvarItem()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Imagem -->
+  <div class="modal-backdrop" *ngIf="mostrarModalImagem">
+    <div class="modal">
+      <h2>Alterar Imagem da Campanha</h2>
+      <input type="file" accept="image/*" (change)="selecionarImagemCampanha($event)"/>
+      <div class="imagem-preview" *ngIf="imagemPreview">
+        <img [src]="imagemPreview" alt="Prévia"/>
+        <button class="btn remover" (click)="removerImagemCampanha()">Remover Imagem</button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="fecharModalImagem()">Cancelar</button>
+        <button class="btn btn-salvar" (click)="confirmarAcao()">Salvar Imagem</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Senha -->
+  <div class="modal-backdrop" *ngIf="mostrarModalSenha">
+    <div class="modal-content">
+      <h2>Confirmação de Senha</h2>
+      <p>Digite sua senha para confirmar a ação.</p>
+      <input type="password" [(ngModel)]="senhaConfirmacao" placeholder="Senha" class="form-input"/>
+      <div class="modal-buttons">
+        <button class="btn btn-secondary" (click)="cancelarModalSenha()">Cancelar</button>
+        <button class="btn btn-danger" (click)="confirmarAcao()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

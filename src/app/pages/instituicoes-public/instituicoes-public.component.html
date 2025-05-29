@@ -1,0 +1,67 @@
+<app-header></app-header>
+
+<main class="pagina-explorar">
+  <section class="filtros-container">
+    <h2>Seu gesto começa aqui!</h2>
+    <div class="filtros">
+      <!-- NOME -->
+      <div class="autocomplete-container">
+        <img src="assets/svg/lupaBusca.svg" alt="Buscar" class="lupa-icon" />
+        <input type="text" placeholder="Nome da instituição"
+               [(ngModel)]="filtros.nome"
+               (input)="buscarPorNome()"
+               (blur)="fecharSugestoes('nome')" />
+        <ul class="autocomplete-list" *ngIf="sugestoesNome.length || nenhumNome">
+          <li *ngFor="let nome of sugestoesNome" (click)="selecionarNome(nome)" class="autocomplete-item">
+            {{ nome }}
+          </li>
+          <li *ngIf="nenhumNome" class="autocomplete-item disabled">Nenhuma instituição encontrada com esse nome</li>
+        </ul>
+      </div>
+
+      <!-- CIDADE -->
+      <div class="autocomplete-container">
+        <img src="assets/svg/lupaBusca.svg" alt="Buscar" class="lupa-icon" />
+        <input type="text" placeholder="Cidade"
+               [(ngModel)]="filtros.cidade"
+               (input)="buscarPorCidade()"
+               (blur)="fecharSugestoes('cidade')" />
+        <ul class="autocomplete-list" *ngIf="sugestoesCidade.length || nenhumaCidade">
+          <li *ngFor="let cidade of sugestoesCidade" (click)="selecionarCidade(cidade)" class="autocomplete-item">
+            {{ cidade }}
+          </li>
+          <li *ngIf="nenhumaCidade" class="autocomplete-item disabled">Nenhuma instituição encontrada nessa cidade</li>
+        </ul>
+      </div>
+
+      <!-- ESTADO -->
+      <select [(ngModel)]="filtros.uf">
+        <option value="">Todos os estados</option>
+        <option *ngFor="let uf of estados" [value]="uf">{{ uf }}</option>
+      </select>
+
+      <!-- CATEGORIA -->
+      <select [(ngModel)]="filtros.categoria">
+        <option value="">Todas as categorias</option>
+        <option *ngFor="let cat of categoriasBonitas" [value]="cat.value">{{ cat.label }}</option>
+      </select>
+
+      <!-- BOTÃO -->
+      <button (click)="buscarInstituicoes()">Filtrar</button>
+    </div>
+  </section>
+
+  <section class="lista-instituicoes">
+    <div class="card" *ngFor="let inst of instituicoes" (click)="verDetalhes(inst)">
+      <img [src]="getImagem(inst.imagemPerfil)" alt="Instituição" />
+      <p>{{ inst.nomeInstituicao }}</p>
+    </div>
+
+    <div class="sem-resultados" *ngIf="instituicoes.length === 0">
+      Nenhuma instituição encontrada com os filtros selecionados.
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
+

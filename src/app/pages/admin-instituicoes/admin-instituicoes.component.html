@@ -1,0 +1,62 @@
+<div class="pagina-admin pagina-edicao">
+  <app-sidebar-admin></app-sidebar-admin>
+  <div class="user-container">
+    <h2>Gerenciar Instituições</h2>
+    <li>
+      <a routerLink="/admin/dashboard">
+        <img src="assets/svg/grafico.svg" alt="Gráficos" width="18" height="18" />
+        Painel de Gráficos
+      </a>
+    </li>
+
+    <div class="filtros" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+      <input type="text" placeholder="Buscar por nome ou email..." [(ngModel)]="filtro" class="form-control" style="flex: 1; min-width: 250px;" />
+      <input type="text" placeholder="Filtrar por cidade..." [(ngModel)]="filtroCidade" class="form-control" style="flex: 1; min-width: 200px;" />
+      <select [(ngModel)]="filtroCategoria" class="form-control" style="flex: 1; min-width: 200px;">
+        <option value="">Todas as categorias</option>
+        <option *ngFor="let cat of categorias" [value]="cat">{{ cat | titlecase }}</option>
+      </select>
+      <select [(ngModel)]="filtroUf" class="form-control" style="flex: 1; min-width: 150px;">
+      <option value="">Todos os estados</option>
+        <option *ngFor="let uf of ufs" [value]="uf">{{ uf }}</option>
+      </select>
+    </div>
+
+    <div *ngIf="instituicoesFiltradas.length === 0">
+      <p>Nenhuma instituição encontrada.</p>
+    </div>
+
+    <div class="card-grid">
+      <div *ngFor="let inst of instituicoesFiltradas" class="bloco-instituicao">
+        <h3>{{ inst.nomeInstituicao | titlecase }}</h3>
+        <p><strong>Email:</strong> {{ inst.email }}</p>
+        <p><strong>Telefone:</strong> {{ inst.telefone }}</p>
+        <p><strong>Categoria:</strong> {{ inst.categoria | titlecase }}</p>
+        <p><strong>Cidade:</strong> {{ inst.endereco?.cidade | titlecase }}</p>
+        <p><strong>Estado:</strong> {{ inst.endereco?.uf }}</p>
+
+        <div class="btn-group">
+          <button class="btn salvar" (click)="verListas(inst.idInstituicao)">Listas</button>
+          <button class="btn salvar" (click)="verCampanhas(inst.idInstituicao)">Campanhas</button>
+          <button class="btn editar" (click)="editar(inst.idInstituicao)">Editar</button>
+          <button class="btn excluir" (click)="abrirModalSenha(inst.idInstituicao)">Excluir</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE SENHA -->
+    <div class="modal-backdrop" *ngIf="mostrarModalSenha">
+      <div class="modal-content">
+        <h2>Confirmação de Senha</h2>
+        <p>Digite sua senha para excluir a instituição.</p>
+
+        <input type="password" [(ngModel)]="senhaConfirmacao" placeholder="Senha" class="form-control" />
+
+        <div class="modal-buttons">
+          <button class="btn btn-secondary" (click)="cancelarModal()">Cancelar</button>
+          <button class="btn btn-danger" (click)="confirmarExclusao()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,11 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { DefaultLoginLayoutComponent } from '../../components/default-login-layout/default-login-layout.component';
 
 @Component({
   selector: 'app-redefinir-senha',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DefaultLoginLayoutComponent
+  ],
   templateUrl: './redefinir-senha.component.html',
   styleUrls: ['./redefinir-senha.component.scss']
 })
@@ -22,7 +27,8 @@ export class RedefinirSenhaComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token') || '';
@@ -37,11 +43,16 @@ export class RedefinirSenhaComponent implements OnInit {
 
   senhasIguaisValidator(group: FormGroup) {
     return group.get('novaSenha')?.value === group.get('confirmaSenha')?.value
-      ? null : { senhasDiferentes: true };
+      ? null : {senhasDiferentes: true};
   }
 
   redefinirSenha() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      if (this.form.errors?.['senhasDiferentes']) {
+        this.toastr.error('As senhas não coincidem.');
+      }
+      return;
+    }
 
     const body = {
       token: this.token,
@@ -60,4 +71,9 @@ export class RedefinirSenhaComponent implements OnInit {
         }
       });
   }
+
+  voltar() {
+    this.router.navigate(['/login']);
+  }
+
 }

@@ -1,0 +1,55 @@
+<app-header></app-header>
+<div class="pagina-detalhes">
+  <div class="detalhes-container" *ngIf="instituicao">
+    <div class="topo">
+      <img [src]="getImagem(instituicao.imagemPerfil)" alt="Imagem da instituição" />
+      <div class="info">
+        <h2>{{ instituicao.nomeInstituicao }}</h2>
+
+        <div class="box historia-box" *ngIf="instituicao.historia && instituicao.historia.trim() !== ''">
+          <h3 class="titulo-historia">Um pouco sobre nós</h3>
+          <p class="texto-historia">{{ instituicao.historia }}</p>
+        </div>
+
+        <div class="box endereco-box">
+          <p><strong>Rua:</strong> {{ instituicao.endereco?.rua }}, {{ instituicao.endereco?.numero }}</p>
+          <p *ngIf="instituicao.endereco?.complemento"><strong>Complemento:</strong> {{ instituicao.endereco?.complemento }}</p>
+          <p><strong>Bairro:</strong> {{ instituicao.endereco?.bairro }}</p>
+          <p><strong>Cidade:</strong> {{ instituicao.endereco?.cidade }}</p>
+          <p><strong>Estado:</strong> {{ instituicao.endereco?.uf }}</p>
+          <p><strong>CEP:</strong> {{ instituicao.endereco?.cep }}</p>
+        </div>
+
+        <div class="box telefone-box">
+          <p><strong>Telefone:</strong> {{ formatarTelefone(instituicao.telefone) }}</p>
+        </div>
+
+        <div class="box categoria-box">
+          <p><strong>Categoria:</strong> {{ formatarCategoria(instituicao.categoria) }}</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="titulo-itens">O que precisamos ?</h3>
+
+    <div class="grid-itens" *ngIf="itens.length > 0; else semItens">
+      <div class="item-card" *ngFor="let item of itens">
+        <h4>{{ item.nome }}</h4>
+        <p class="descricao">{{ item.descricao }}</p>
+        <span class="status"
+              [ngClass]="{
+                'urgente': item.statusProduto?.toLowerCase() === 'urgente',
+                'suficiente': item.statusProduto?.toLowerCase() === 'suficiente',
+                'insuficiente': item.statusProduto?.toLowerCase() === 'insuficiente'
+              }">
+          {{ item.statusProduto }}
+        </span>
+      </div>
+    </div>
+
+    <ng-template #semItens>
+      <p class="sem-itens">Nenhuma lista de ajuda cadastrada.</p>
+    </ng-template>
+  </div>
+</div>
+<app-footer></app-footer>

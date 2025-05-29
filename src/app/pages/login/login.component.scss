@@ -1,3 +1,46 @@
+//form {
+//  width: 100%;
+//  max-width: 450px;
+//  display: flex;
+//  flex-direction: column;
+//  gap: 24px;
+//  margin-bottom: 34px;
+//}
+//
+//span {
+//  font-size: 14px;
+//  text-decoration: underline;
+//  color: #049DD9;
+//  text-align: right;
+//}
+//
+//button.btn-primary {
+//  width: 100%;
+//  border-radius: 8px;
+//  font-size: 16px;
+//  font-weight: 500;
+//  border: none;
+//  background-color: #F24182;
+//  color: white;
+//  padding: 12px 24px;
+//  cursor: pointer;
+//  transition: 0.3s;
+//  box-shadow: 0px 8px 12px rgba(148, 64, 255, 0.2);
+//
+//  &:disabled {
+//    opacity: 0.8;
+//  }
+//
+//  &:hover {
+//    opacity: 0.9;
+//    transform: scale(1.01);
+//  }
+//}
+//
+//app-primary-input {
+//  width: 100%;
+//  display: block;
+//}
 form {
   width: 100%;
   max-width: 450px;
@@ -7,15 +50,88 @@ form {
   margin-bottom: 34px;
 }
 
-span {
-  font-size: 14px;
+.input-wrapper {
+  width: 100%;
+
+  label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+    display: block;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 2.5px solid #049DD9;
+    outline: none;
+    color: black;
+  }
+}
+
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 2.5px solid #049DD9;
+  padding: 0;
+  width: 100%;
+
+  input {
+    flex: 1;
+    border: none;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 12px;
+    background-color: transparent;
+    color: black;
+    outline: none;
+    padding-right: 90px;
+  }
+
+  .right-group {
+    position: absolute;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+
+    img {
+      height: 20px;
+      pointer-events: none;
+    }
+  }
+}
+
+/* Link de "Esqueceu sua senha?" */
+a {
+  font-size: 16px;
   text-decoration: underline;
   color: #049DD9;
   text-align: right;
+  margin-top: -8px;
+  margin-bottom: 16px;
 }
 
+/* Mensagens de erro */
+.error {
+  font-size: 15px;
+  color: red;
+  margin: -10px 0 10px 4px;
+}
+
+/* Botão Entrar */
 button.btn-primary {
   width: 100%;
+  max-width: 450px;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
@@ -26,18 +142,15 @@ button.btn-primary {
   cursor: pointer;
   transition: 0.3s;
   box-shadow: 0px 8px 12px rgba(148, 64, 255, 0.2);
+  margin-bottom: 20px;
 
   &:disabled {
     opacity: 0.8;
+    cursor: not-allowed;
   }
 
   &:hover {
     opacity: 0.9;
     transform: scale(1.01);
   }
-}
-
-app-primary-input {
-  width: 100%;
-  display: block;
 }

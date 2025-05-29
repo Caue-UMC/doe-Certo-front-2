@@ -1,53 +1,61 @@
 <app-default-login-layout
   title="Cadastre-se"
   [primaryBtnText]="primaryText"
-  secundaryBtnText="Entrar"
   [disablePrimaryBtn]="disableBtn"
+  secundaryBtnText="Entrar"
   (navigate)="navigate()"
+  (submit)="submit()"
 >
   <form [formGroup]="cadastroForm" (ngSubmit)="submit()">
 
-    <app-primary-input
-      formControlName="email"
-      inputName="email"
-      type="email"
-      label="Email"
-    >
-      <img src="/assets/svg/email-icon.svg" />
-    </app-primary-input>
+    <!-- Email -->
+    <div class="input-wrapper">
+      <label for="email">Email</label>
+      <div class="select-wrapper">
+        <input id="email" type="email" formControlName="email" />
+        <div class="right-group">
+          <img class="right-icon" src="/assets/svg/email-icon.svg" alt="Ícone Email" />
+        </div>
+      </div>
+    </div>
     <p class="error" *ngIf="cadastroForm.get('email')?.invalid && cadastroForm.get('email')?.touched">
       Insira um email válido.
     </p>
 
-    <app-primary-input
-      formControlName="cnpj"
-      inputName="cnpj"
-      type="text"
-      label="CNPJ"
-    >
-      <img src="/assets/svg/id-icon.svg" />
-    </app-primary-input>
+    <!-- CNPJ -->
+    <div class="input-wrapper">
+      <label for="cnpj">CNPJ</label>
+      <div class="select-wrapper">
+        <input id="cnpj" type="text" formControlName="cnpj" mask="00.000.000/0000-00" />
+        <div class="right-group">
+          <img class="right-icon" src="/assets/svg/id-icon.svg" alt="Ícone CNPJ" />
+        </div>
+      </div>
+    </div>
     <p class="error" *ngIf="cadastroForm.get('cnpj')?.invalid && cadastroForm.get('cnpj')?.touched">
       Preencha o CNPJ.
     </p>
 
-    <app-primary-input
-      formControlName="nomeInstituicao"
-      inputName="nomeInstituicao"
-      type="text"
-      label="Nome da Instituição"
-    >
-      <img src="/assets/svg/nome-icon.svg" />
-    </app-primary-input>
+    <!-- Nome da Instituição -->
+    <div class="input-wrapper">
+      <label for="nomeInstituicao">Nome da Instituição</label>
+      <div class="select-wrapper">
+        <input id="nomeInstituicao" type="text" formControlName="nomeInstituicao" />
+        <div class="right-group">
+          <img class="right-icon" src="/assets/svg/nome-icon.svg" alt="Ícone Nome" />
+        </div>
+      </div>
+    </div>
     <p class="error" *ngIf="cadastroForm.get('nomeInstituicao')?.invalid && cadastroForm.get('nomeInstituicao')?.touched">
       Preencha o nome da instituição.
     </p>
 
+    <!-- Categoria -->
     <div class="input-wrapper">
       <label>Categoria</label>
       <div class="select-wrapper">
         <select formControlName="categoria">
-          <option [ngValue]="null" disabled hidden>Selecione uma categoria</option>
+          <option [ngValue]="null" disabled hidden>Clique para selecionar uma categoria</option>
           <option *ngFor="let categoria of categorias" [value]="categoria">
             {{ categoria | lowercase | titlecase }}
           </option>
@@ -62,56 +70,135 @@
       Selecione uma categoria.
     </p>
 
-    <app-primary-input
-      formControlName="endereco"
-      inputName="endereco"
-      type="text"
-      label="Endereço"
-    >
-      <img src="/assets/svg/adress-icon.svg" />
-    </app-primary-input>
-    <p class="error" *ngIf="cadastroForm.get('endereco')?.invalid && cadastroForm.get('endereco')?.touched">
-      Preencha o endereço.
-    </p>
+    <!-- ENDEREÇO -->
+    <ng-container [formGroup]="enderecoForm">
+      <!-- CEP -->
+      <div class="input-wrapper">
+        <label for="cep">CEP</label>
+        <div class="select-wrapper">
+          <input id="cep" type="text" formControlName="cep" mask="00000-000" (blur)="buscarEnderecoPorCep()" />
+          <div class="right-group">
+            <img class="right-icon" src="/assets/svg/adress-icon.svg" alt="Ícone CEP" />
+          </div>
+        </div>
+      </div>
+      <p class="error" *ngIf="enderecoForm.get('cep')?.invalid && enderecoForm.get('cep')?.touched">
+        Preencha o CEP.
+      </p>
 
-    <app-primary-input
-      formControlName="telefone"
-      inputName="telefone"
-      type="text"
-      label="Telefone"
-    >
-      <img src="/assets/svg/cell-icon.svg" />
-    </app-primary-input>
+      <div class="mostrar-mais-wrapper">
+        <button type="button" class="mostrar-mais" (click)="mostrarEnderecoCompleto = !mostrarEnderecoCompleto">
+          {{ mostrarEnderecoCompleto ? 'Ocultar endereço completo' : 'Preencher endereço completo' }}
+        </button>
+      </div>
+
+      <div *ngIf="mostrarEnderecoCompleto" class="campos-endereco">
+
+       <!--Rua -->
+        <div class="input-wrapper"><label for="rua">Rua</label><input id="rua" type="text" formControlName="rua" /></div>
+        <p class="error" *ngIf="enderecoForm.get('rua')?.invalid && enderecoForm.get('rua')?.touched">
+          Preencha a rua.
+        </p>
+
+        <!-- Numero -->
+        <div class="input-wrapper"><label for="numero">Número</label><input id="numero" type="text" formControlName="numero" /></div>
+        <p class="error" *ngIf="enderecoForm.get('numero')?.invalid && enderecoForm.get('numero')?.touched">
+          Preencha o número.
+        </p>
+
+        <!-- Complemento -->
+        <div class="input-wrapper"><label for="complemento">Complemento</label><input id="complemento" type="text" formControlName="complemento" /></div>
+
+        <!-- Bairro -->
+        <div class="input-wrapper"><label for="bairro">Bairro</label><input id="bairro" type="text" formControlName="bairro" /></div>
+        <p class="error" *ngIf="enderecoForm.get('bairro')?.invalid && enderecoForm.get('bairro')?.touched">
+          Preencha o bairro.
+        </p>
+
+        <!-- Cidade -->
+        <div class="input-wrapper"><label for="cidade">Cidade</label><input id="cidade" type="text" formControlName="cidade" /></div>
+        <p class="error" *ngIf="enderecoForm.get('cidade')?.invalid && enderecoForm.get('cidade')?.touched">
+          Preencha a cidade.
+        </p>
+
+        <!-- Estado -->
+        <div class="input-wrapper">
+          <label for="uf">Estado</label>
+          <div class="select-wrapper">
+            <select id="uf" formControlName="uf">
+              <option [value]="''" disabled hidden>Clique para selecionar o estado</option>
+              <option *ngFor="let uf of ufs" [value]="uf">{{ uf }}</option>
+            </select>
+            <div class="right-group">
+              <img class="arrow-icon" src="/assets/svg/arrow-down-icon.svg" alt="Seta" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Telefone -->
+    <div class="input-wrapper">
+      <label for="telefone">Telefone</label>
+      <div class="select-wrapper">
+        <input id="telefone" type="text" formControlName="telefone" mask="(00) 00000-0000" />
+        <div class="right-group">
+          <img class="right-icon" src="/assets/svg/cell-icon.svg" alt="Ícone Telefone" />
+        </div>
+      </div>
+    </div>
     <p class="error" *ngIf="cadastroForm.get('telefone')?.invalid && cadastroForm.get('telefone')?.touched">
       Preencha o telefone.
     </p>
 
-    <app-primary-input
-      formControlName="senha"
-      inputName="senha"
-      type="password"
-      label="Senha"
-    >
-      <img src="/assets/svg/senha-icon.svg" />
-    </app-primary-input>
+    <!-- Senha -->
+    <div class="input-wrapper">
+      <label for="senha">Senha</label>
+      <div class="select-wrapper">
+        <input id="senha" type="password" formControlName="senha" />
+        <div class="right-group">
+          <img class="right-icon" src="/assets/svg/senhaconfirma-icon.svg" alt="Ícone Senha" />
+        </div>
+      </div>
+    </div>
     <p class="error" *ngIf="cadastroForm.get('senha')?.invalid && cadastroForm.get('senha')?.touched">
-      A senha deve ter no mínimo 6 caracteres.
+      A senha precisa ter no mínimo 6 caracteres.
     </p>
-
-    <app-primary-input
-      formControlName="confirmaSenha"
-      inputName="confirmaSenha"
-      type="password"
-      label="Confirme sua senha"
-    >
-      <img src="/assets/svg/senha-icon.svg" />
-    </app-primary-input>
+    <div class="input-wrapper">
+      <label for="confirmaSenha">Confirme sua senha</label>
+      <div class="select-wrapper">
+        <input id="confirmaSenha" type="password" formControlName="confirmaSenha" />
+        <div class="right-group">
+          <img class="right-icon" src="/assets/svg/senha-icon.svg" alt="Ícone Senha" />
+        </div>
+      </div>
+    </div>
     <p class="error" *ngIf="cadastroForm.get('confirmaSenha')?.invalid && cadastroForm.get('confirmaSenha')?.touched">
-      Confirme a senha.
+      Confirme sua senha.
     </p>
 
-    <button type="submit" class="btn-primary" [disabled]="disableBtn">
-      {{ primaryText }}
-    </button>
+    <!-- Política -->
+    <div class="politica-wrapper">
+      <input type="checkbox" id="aceitou" formControlName="aceitouPolitica" />
+      <label for="aceitou">
+        Eu li e aceito a <span (click)="abrirModal()">Política de Privacidade</span>
+      </label>
+      <div *ngIf="cadastroForm.get('aceitouPolitica')?.invalid && cadastroForm.touched" class="mensagem-erro">
+        Você precisa aceitar a política para se cadastrar.
+      </div>
+    </div>
   </form>
+
+  <!-- Modal da Política -->
+  <div class="modal" *ngIf="mostrarModal">
+    <div class="modal-content">
+      <h3>Política de Privacidade</h3>
+      <p>
+        Seus dados serão utilizados exclusivamente para identificar e manter contato com a instituição.
+        Nenhuma informação será compartilhada com terceiros. Você tem o direito de acessar, corrigir
+        ou excluir seus dados conforme a LGPD.
+      </p>
+      <button (click)="fecharModal()">Fechar</button>
+    </div>
+  </div>
 </app-default-login-layout>

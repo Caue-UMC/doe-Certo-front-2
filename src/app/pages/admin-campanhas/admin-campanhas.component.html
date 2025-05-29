@@ -1,0 +1,123 @@
+<div class="pagina-edicao-campanha">
+  <div class="dashboard-container">
+    <app-sidebar-admin></app-sidebar-admin>
+    <main class="conteudo">
+      <h2 class="titulo-pagina">Campanhas da Instituição</h2>
+
+      <!-- Filtro -->
+      <div class="header">
+        <input type="text" class="form-control" placeholder="Buscar por nome, status, cidade ou estado..." [(ngModel)]="filtro" (input)="filtrarCampanhas()">
+      </div>
+
+      <div *ngIf="campanhasFiltradas.length === 0">
+        <p>Nenhuma campanha encontrada.</p>
+      </div>
+
+      <table class="tabela" *ngIf="campanhasFiltradas.length > 0">
+        <thead>
+        <tr>
+          <th>Imagem</th>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Período</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let c of campanhasFiltradas">
+          <td>
+            <img [src]="c.imagemCampanha ? 'data:image/jpeg;base64,'+c.imagemCampanha : 'assets/png/imagem-campanha-padrao.png'" class="imagem-campanha"/>
+          </td>
+          <td>
+            <input *ngIf="c.editando" [(ngModel)]="c.nome" class="form-input" [ngClass]="{'invalid':!c.nome?.trim()}" />
+            <span *ngIf="!c.editando">{{c.nome}}</span>
+          </td>
+          <td>
+            <input *ngIf="c.editando" [(ngModel)]="c.descricao" class="form-input" [ngClass]="{'invalid':!c.descricao?.trim()}" />
+            <span *ngIf="!c.editando">{{c.descricao}}</span>
+          </td>
+          <td>
+            <div *ngIf="c.editando">
+              <input type="date" [(ngModel)]="c.dataInicio" class="form-input" [ngClass]="{'invalid':!c.dataInicio}" /> até
+              <input type="date" [(ngModel)]="c.dataFim" class="form-input" [ngClass]="{'invalid':!c.dataFim}" />
+            </div>
+            <span *ngIf="!c.editando">{{c.dataInicio}} até {{c.dataFim}}</span>
+          </td>
+          <td>
+            <select *ngIf="c.editando" [(ngModel)]="c.ativa" class="form-input">
+              <option [ngValue]="true">Ativa</option>
+              <option [ngValue]="false">Inativa</option>
+            </select>
+            <span *ngIf="!c.editando">{{c.ativa ? 'Ativa' : 'Inativa'}}</span>
+          </td>
+          <td>
+            <ng-container *ngIf="!c.editando">
+              <button class="btn-acao editar" (click)="editarCampanha(c)">Editar</button>
+              <button class="btn-acao excluir" (click)="abrirModalSenha(c, 'excluir')">Excluir</button>
+            </ng-container>
+            <ng-container *ngIf="c.editando">
+              <button class="btn-acao salvar" (click)="abrirModalSenha(c, 'editar')">Salvar</button>
+              <button class="btn-acao cancelar" (click)="cancelarEdicao(c)">Cancelar</button>
+              <button class="btn-acao editar" (click)="abrirModalImagem()">Alterar/Remover Imagem</button>
+
+              <div class="form-check checkbox-editar">
+                <label>
+                  <input type="checkbox" [(ngModel)]="c.usarEnderecoInstituicao" (change)="aoAlterarCheckboxEndereco(c)" />
+                  Usar endereço da instituição
+                </label>
+              </div>
+
+              <div *ngIf="!c.usarEnderecoInstituicao">
+                <label>CEP</label>
+                <input type="text" [(ngModel)]="c.endereco.cep" mask="00000-000" (input)="aoDigitarCepEdicao(c)" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.cepVazio}" />
+                <label>Rua</label>
+                <input type="text" [(ngModel)]="c.endereco.rua" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.ruaVazia}" />
+                <label>Número</label>
+                <input type="text" [(ngModel)]="c.endereco.numero" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.numeroVazio}" />
+                <label>Complemento</label>
+                <input type="text" [(ngModel)]="c.endereco.complemento" class="form-input" />
+                <label>Bairro</label>
+                <input type="text" [(ngModel)]="c.endereco.bairro" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.bairroVazio}" />
+                <label>Cidade</label>
+                <input type="text" [(ngModel)]="c.endereco.cidade" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.cidadeVazia}" />
+                <label>Estado</label>
+                <input type="text" maxlength="2" [(ngModel)]="c.endereco.uf" class="form-input" [ngClass]="{'invalid':c.validacaoEndereco?.ufVazia}" />
+              </div>
+            </ng-container>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <!-- Modal de imagem -->
+  <div class="modal-backdrop" *ngIf="mostrarModalImagem && campanhaSelecionada?.editando">
+    <div class="modal">
+      <h2>Alterar Imagem da Campanha</h2>
+      <input type="file" accept="image/*" (change)="selecionarImagemCampanha($event)" />
+      <div class="imagem-preview" *ngIf="imagemPreview">
+        <img [src]="imagemPreview" alt="Prévia" />
+        <button class="btn remover" (click)="removerImagemCampanha()">Remover Imagem</button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="fecharModalImagem()">Cancelar</button>
+        <button class="btn btn-salvar" (click)="salvarImagemCampanha()">Salvar Imagem</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de senha -->
+  <div class="modal-backdrop" *ngIf="mostrarModalSenha">
+    <div class="modal-content">
+      <h2>Confirmação de Senha</h2>
+      <p>Digite a senha da instituição para confirmar a ação.</p>
+      <input type="password" [(ngModel)]="senhaConfirmacao" placeholder="Senha" class="form-input" />
+      <div class="modal-buttons">
+        <button class="btn btn-secondary" (click)="cancelarModalSenha()">Cancelar</button>
+        <button class="btn btn-danger" (click)="confirmarAcao()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

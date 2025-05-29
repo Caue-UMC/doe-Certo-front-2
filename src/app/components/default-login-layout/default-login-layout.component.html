@@ -1,10 +1,48 @@
+<!--<main>-->
+<!--  <section class="main-section">-->
+<!--    <img src="assets/svg/maoslogin.svg">-->
+<!--  </section>-->
+
+<!--  <section class="form-section">-->
+<!--    <img src="assets/svg/DoeCerto-text.svg">-->
+
+<!--    <h2>{{ title }}</h2>-->
+
+<!--    <div class="form-wrapper">-->
+<!--      <ng-content></ng-content>-->
+<!--    </div>-->
+
+<!--    <button-->
+<!--      type="button"-->
+<!--      class="btn-primary"-->
+<!--      [disabled]="disablePrimaryBtn"-->
+<!--      (click)="submit()"-->
+<!--    >-->
+<!--      {{ primaryBtnText }}-->
+<!--    </button>-->
+
+<!--    <div class="btn-wrapper">-->
+<!--      <div class="divider">-->
+<!--        <div></div>-->
+<!--        <span style="color: black">ou</span>-->
+<!--        <div></div>-->
+<!--      </div>-->
+
+<!--      <button type="button"-->
+<!--              class="btn-secondary"-->
+<!--              (click)="navigate()">-->
+<!--        {{ secundaryBtnText }}-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </section>-->
+<!--</main>-->
 <main>
   <section class="main-section">
-    <img src="assets/svg/maoslogin.svg">
+    <img src="assets/svg/maoslogin.svg" alt="Imagem de fundo">
   </section>
 
   <section class="form-section">
-    <img src="assets/svg/DoeCerto-text.svg">
+    <img src="assets/svg/DoeCerto-text.svg" alt="Logo Doe Certo" />
 
     <h2>{{ title }}</h2>
 
@@ -12,16 +50,27 @@
       <ng-content></ng-content>
     </div>
 
+    <button
+      type="button"
+      class="btn-primary"
+      [disabled]="disablePrimaryBtn"
+      (click)="submit()"
+    >
+      {{ primaryBtnText }}
+    </button>
+
     <div class="btn-wrapper">
       <div class="divider">
         <div></div>
-        <span style="color: black">ou</span>
+        <span>ou</span>
         <div></div>
       </div>
 
-      <button type="button"
-              class="btn-secondary"
-              (click)="navigate()">
+      <button
+        type="button"
+        class="btn-secondary"
+        (click)="navigate()"
+      >
         {{ secundaryBtnText }}
       </button>
     </div>

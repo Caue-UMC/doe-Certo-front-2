@@ -1,0 +1,63 @@
+<header>
+  <div class="logo-area">
+    <a routerLink="/home" class="logo-link">
+      <img src="assets/svg/coracaologo.svg" alt="Logo" class="logo-img" />
+      <img src="assets/svg/doeCertoLogoHome.svg" alt="DOE CERTO" class="logo-text-svg" />
+    </a>
+  </div>
+
+  <nav class="central-nav">
+    <a routerLink="/quem-somos">Quem somos ?</a>
+    <a routerLink="/explorar" class="btn-explorar">Quem ajudar ?</a>
+    <a href="/explorar/campanhas">Campanhas solidárias</a>
+  </nav>
+
+  <div class="search-login">
+    <div class="autocomplete-container">
+      <img src="assets/svg/lupaBusca.svg" alt="Buscar" class="lupa-icon" />
+      <input
+        type="text"
+        placeholder="Digite o nome da instituição..."
+        [(ngModel)]="busca"
+        (input)="buscarInstituicao()"
+      />
+      <ul class="autocomplete-list" *ngIf="busca && (resultados.length > 0 || nenhumResultado)">
+        <li
+          *ngFor="let inst of resultados"
+          (click)="irParaInstituicao(inst.idInstituicao)"
+          class="autocomplete-item"
+        >
+          <img
+            [src]="inst.imagemPerfil ? 'data:image/jpeg;base64,' + inst.imagemPerfil : 'assets/svg/perfil-padrao.svg'"
+            alt="Foto"
+            class="autocomplete-img"
+          />
+          {{ inst.nomeInstituicao }}
+        </li>
+        <li *ngIf="nenhumResultado" class="autocomplete-item disabled">
+          Nenhuma instituição encontrada
+        </li>
+      </ul>
+    </div>
+
+    <ng-container *ngIf="estaLogado; else loginButton">
+      <div class="user-menu" (click)="toggleDropdown()">
+        <img [src]="imagemUsuario" alt="Foto do usuário" class="user-photo" />
+        <div class="dropdown-content" *ngIf="dropdownAberto">
+          <a (click)="irParaConfiguracoes()">
+            <img src="assets/svg/config.svg" alt="Configurações" width="18" height="18" />
+            {{ isAdmin ? 'Painel do Admin' : 'Configurações da conta' }}
+          </a>
+          <a (click)="sair()" class="logout">
+            <img src="assets/png/sair-do-usuario.png" alt="Sair" width="18" height="18" />
+            Sair
+          </a>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #loginButton>
+      <button (click)="navigateToLogin()">Entrar</button>
+    </ng-template>
+  </div>
+</header>

@@ -1,40 +1,40 @@
-<header>
-  <div class="logo">
-    <img src="/assets/svg/logo.svg" alt="Logo" />
-    <span>DOE CERTO</span>
-  </div>
-  <nav>
-    <a href="#">LOREM IPSUM</a>
-    <a href="#">LOREM IPSUM</a>
-    <a href="#">LOREM IPSUM</a>
-  </nav>
-  <div class="search-login">
-    <input type="text" placeholder="Busca..." />
-    <button (click)="navigateToLogin()">Entrar</button>
-  </div>
-</header>
+<app-header></app-header>
 
-<section class="banner">
-  <img src="/assets/svg/hands.svg" alt="Imagem mãos" />
-  <h2>LOREM IPSUM</h2>
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br />
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  </p>
-</section>
+<main class="conteudo">
+  <section class="top-banner">
+    <img src="assets/svg/maosHome.png" alt="Mãos" class="banner-img" />
+    <div class="banner-texto">
+      <h2><span class="barra"></span>Doe com o coração</h2>
+      <p>
+        Você não precisa de muito para fazer a diferença.
+        Com um único gesto, é possível transformar vidas, reacender esperanças e inspirar mudanças.
+        No Doe Certo, criamos pontes entre mãos que ajudam e corações que aguardam.
+        O futuro que desejamos começa com a sua decisão de agir hoje.
+      </p>
+    </div>
+  </section>
 
-<section class="cards-section">
-  <h2>LOREM IPSUM</h2>
-  <div class="cards">
-    <div class="card">LOREM IPSUM</div>
-    <div class="card">LOREM IPSUM</div>
-    <div class="card">LOREM IPSUM</div>
-    <div class="card">LOREM IPSUM</div>
-    <div class="card">LOREM IPSUM</div>
-    <div class="card">LOREM IPSUM</div>
-  </div>
-</section>
+  <section class="cards-section">
+    <h2 class="cards-title">Conheça Instituições em Destaque</h2>
+    <div
+      class="carousel"
+      #carouselContainer
+      (mouseenter)="pausarAutoplay()"
+      (mouseleave)="iniciarAutoplay()"
+    >
+      <div
+        class="carousel-card"
+        *ngFor="let inst of instituicoesDestaque"
+        (click)="irParaInstituicao(inst.idInstituicao)"
+      >
+        <img
+          [src]="inst.imagemPerfil ? 'data:image/jpeg;base64,' + inst.imagemPerfil : 'assets/svg/perfil-padrao.svg'"
+          alt="Imagem da instituição"
+        />
+        <span>{{ inst.nomeInstituicao }}</span>
+      </div>
+    </div>
+  </section>
+</main>
 
-<footer>
-  &copy;2025 Copyright DoeCerto - Todos os direitos reservados
-</footer>
+<app-footer></app-footer>

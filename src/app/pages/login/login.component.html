@@ -1,37 +1,94 @@
+<!--<app-default-login-layout-->
+<!--  title="Acessar sua conta"-->
+<!--  secundaryBtnText="Criar conta"-->
+<!--  (navigate)="navigate()"-->
+<!--  [disablePrimaryBtn]="!loginForm.valid"-->
+<!--&gt;-->
+<!--  <form [formGroup]="loginForm" (ngSubmit)="submit()">-->
+<!--    <app-primary-input-->
+<!--      formControlName="email"-->
+<!--      inputName="email"-->
+<!--      type="email"-->
+<!--      label="Email"-->
+<!--      placeholder="Digite seu email aqui"-->
+<!--    >-->
+<!--      <img src="/assets/svg/email-icon.svg">-->
+<!--    </app-primary-input>-->
+
+<!--    <app-primary-input-->
+<!--      formControlName="senha"-->
+<!--      inputName="senha"-->
+<!--      type="password"-->
+<!--      label="Senha"-->
+<!--      placeholder="Digite sua senha aqui"-->
+<!--    >-->
+<!--      <img src="/assets/svg/senha-icon.svg">-->
+<!--    </app-primary-input>-->
+
+<!--    <a [routerLink]="['/recuperar-senha']" style="color: #049DD9; text-decoration: underline; cursor: pointer;">-->
+<!--      Esqueceu sua senha?-->
+<!--    </a>-->
+
+
+<!--    <button type="submit" class="btn-primary" [disabled]="!loginForm.valid">-->
+<!--      Entrar-->
+<!--    </button>-->
+<!--  </form>-->
+<!--</app-default-login-layout>-->
 <app-default-login-layout
   title="Acessar sua conta"
   secundaryBtnText="Criar conta"
   (navigate)="navigate()"
   [disablePrimaryBtn]="!loginForm.valid"
+  [primaryBtnText]="'Entrar'"
+  (submit)="submit()"
 >
-  <form [formGroup]="loginForm" (ngSubmit)="submit()">
-    <app-primary-input
-      formControlName="email"
-      inputName="email"
-      type="email"
-      label="Email"
-      placeholder="Digite seu email aqui"
-    >
-      <img src="/assets/svg/email-icon.svg">
-    </app-primary-input>
+  <form [formGroup]="loginForm">
 
-    <app-primary-input
-      formControlName="senha"
-      inputName="senha"
-      type="password"
-      label="Senha"
-      placeholder="Digite sua senha aqui"
-    >
-      <img src="/assets/svg/senha-icon.svg">
-    </app-primary-input>
+    <!-- Email -->
+    <div class="input-wrapper">
+      <label for="email">Email</label>
+      <div class="select-wrapper">
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Digite seu email aqui"
+        />
+        <div class="right-group">
+          <img src="/assets/svg/email-icon.svg" alt="Ícone Email" class="right-icon" />
+        </div>
+      </div>
+    </div>
+    <p class="error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+      Insira um email válido.
+    </p>
 
-    <a [routerLink]="['/recuperar-senha']" style="color: #049DD9; text-decoration: underline; cursor: pointer;">
+    <!-- Senha -->
+    <div class="input-wrapper">
+      <label for="senha">Senha</label>
+      <div class="select-wrapper">
+        <input
+          id="senha"
+          type="password"
+          formControlName="senha"
+          placeholder="Digite sua senha aqui"
+        />
+        <div class="right-group">
+          <img src="/assets/svg/senha-icon.svg" alt="Ícone Senha" class="right-icon" />
+        </div>
+      </div>
+    </div>
+    <p class="error" *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched">
+      A senha precisa ter no mínimo 6 caracteres.
+    </p>
+
+    <!-- Link: Esqueceu sua senha -->
+    <a
+      [routerLink]="['/recuperar-senha']"
+      style="color: #049DD9; text-decoration: underline; cursor: pointer; margin-top: -8px; margin-bottom: 16px;"
+    >
       Esqueceu sua senha?
     </a>
-
-
-    <button type="submit" class="btn-primary" [disabled]="!loginForm.valid">
-      Entrar
-    </button>
   </form>
 </app-default-login-layout>

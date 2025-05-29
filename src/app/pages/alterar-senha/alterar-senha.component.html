@@ -1,34 +1,58 @@
+<div class="pagina-alterar-senha">
 <div class="user-container">
-  <h2>Alterar Senha</h2>
+  <app-sidebar></app-sidebar>
 
-  <form [formGroup]="form" (ngSubmit)="alterarSenha()">
-    <div class="input-wrapper">
-      <label for="senhaAtual">Senha Atual</label>
-      <input id="senhaAtual" type="password" formControlName="senhaAtual" class="form-input" />
-    </div>
+  <div class="form-box">
+    <h2>Alterar Senha</h2>
 
-    <div class="input-wrapper">
-      <label for="novaSenha">Nova Senha</label>
-      <input id="novaSenha" type="password" formControlName="novaSenha" class="form-input" />
-    </div>
+    <form [formGroup]="form" (ngSubmit)="alterarSenha()">
+      <div class="input-wrapper">
+        <label for="senhaAtual">Senha Atual</label>
+        <input
+          placeholder="Digite sua senha atual"
+          id="senhaAtual"
+          type="password"
+          formControlName="senhaAtual"
+        />
+      </div>
 
-    <div class="input-wrapper">
-      <label for="confirmaNovaSenha">Confirmar Nova Senha</label>
-      <input id="confirmaNovaSenha" type="password" formControlName="confirmaNovaSenha" class="form-input" />
-    </div>
+      <div class="input-wrapper">
+        <label for="novaSenha">Nova Senha</label>
+        <input
+          placeholder="Digite sua nova senha"
+          id="novaSenha"
+          type="password"
+          formControlName="novaSenha"
+        />
+      </div>
 
-    <!-- Erro de senhas diferentes -->
-    <div *ngIf="form.get('confirmaNovaSenha')?.errors?.['senhasDiferentes'] && form.get('confirmaNovaSenha')?.touched" class="error-message">
-      As senhas não coincidem.
-    </div>
+      <div class="input-wrapper">
+        <label for="confirmaNovaSenha">Confirmar Nova Senha</label>
+        <input
+          placeholder="Digite sua nova senha novamente"
+          id="confirmaNovaSenha"
+          type="password"
+          formControlName="confirmaNovaSenha"
+        />
+      </div>
 
-    <div class="btn-group">
-      <button type="submit" class="btn salvar" [disabled]="!form.valid">
-        Salvar Nova Senha
-      </button>
-      <button type="button" class="btn cancelar" (click)="voltarParaUser()">
-        Cancelar
-      </button>
-    </div>
-  </form>
+      <div
+        *ngIf="form.get('confirmaNovaSenha')?.errors?.['senhasDiferentes'] && form.get('confirmaNovaSenha')?.touched"
+        class="error-message"
+      >
+        As senhas não coincidem.
+      </div>
+
+      <div class="btn-group">
+        <button type="submit" class="btn salvar" [disabled]="!form.valid">
+          Salvar Nova Senha
+        </button>
+        <button type="button" class="btn cancelar" (click)="voltarParaUser()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
+</div>
+

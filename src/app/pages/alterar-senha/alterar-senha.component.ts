@@ -4,12 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import {SidebarComponent} from "../../components/sidebar/sidebar.component";
 
 
 @Component({
   selector: 'app-alterar-senha',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+    imports: [CommonModule, ReactiveFormsModule, SidebarComponent],
   templateUrl: './alterar-senha.component.html',
   styleUrls: ['./alterar-senha.component.scss']
 })

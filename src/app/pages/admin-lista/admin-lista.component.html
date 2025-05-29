@@ -1,0 +1,71 @@
+<div class="pagina-edicao">
+  <div class="dashboard-container">
+  <app-sidebar-admin></app-sidebar-admin>
+
+    <main class="conteudo">
+      <h2 class="titulo-pagina">Lista de Necessidades</h2>
+
+      <div class="header">
+        <input type="text" class="form-control" placeholder="Buscar por nome ou status..." [(ngModel)]="filtro" (input)="filtrarLista()">
+      </div>
+
+      <div *ngIf="listaFiltrada.length === 0">
+        <p>Nenhuma instituição encontrada.</p>
+      </div>
+
+      <table class="tabela" *ngIf="listaFiltrada.length > 0">
+        <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Descrição</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of listaFiltrada">
+          <td>
+            <input *ngIf="item.editando" [(ngModel)]="item.nome" class="form-input" [ngClass]="{ 'invalid': item.editando && !item.nome?.trim() }" />
+            <span *ngIf="!item.editando">{{ item.nome }}</span>
+          </td>
+          <td>
+            <textarea *ngIf="item.editando" [(ngModel)]="item.descricao" class="form-input" rows="1"></textarea>
+            <span *ngIf="!item.editando">{{ item.descricao }}</span>
+          </td>
+          <td>
+            <select *ngIf="item.editando" [(ngModel)]="item.statusProduto" class="form-input" [ngClass]="{ 'invalid': item.editando && !item.statusProduto }">
+              <option *ngFor="let status of statusOptions" [value]="status">{{ status | lowercase | titlecase }}</option>
+            </select>
+            <span *ngIf="!item.editando">{{ item.statusProduto }}</span>
+          </td>
+          <td>
+            <ng-container *ngIf="!item.editando">
+              <button class="btn-acao editar" (click)="editarItem(item)">Editar</button>
+              <button class="btn-acao excluir" (click)="abrirModalSenha(item, 'excluir')">Excluir</button>
+            </ng-container>
+            <ng-container *ngIf="item.editando">
+              <button class="btn-acao salvar" (click)="abrirModalSenha(item, 'editar')">Salvar</button>
+              <button class="btn-acao cancelar" (click)="cancelarEdicao(item)">Cancelar</button>
+            </ng-container>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <!-- Modal de senha -->
+  <div class="modal-backdrop" *ngIf="mostrarModalSenha">
+    <div class="modal-content">
+      <h2>Confirmação de Senha</h2>
+      <p>Digite sua senha para continuar.</p>
+
+      <input type="password" [(ngModel)]="senhaConfirmacao" placeholder="Senha" class="form-input" [ngClass]="{ 'invalid': senhaInvalida }" />
+
+      <div class="modal-buttons">
+        <button class="btn btn-secondary" (click)="cancelarModalSenha()">Cancelar</button>
+        <button class="btn btn-danger" (click)="confirmarAcao()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

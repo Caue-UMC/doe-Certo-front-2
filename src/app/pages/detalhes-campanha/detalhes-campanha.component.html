@@ -1,0 +1,117 @@
+<!--<app-header></app-header>-->
+
+<!--<div class="pagina-detalhes-campanha">-->
+<!--  <div class="detalhes-container" *ngIf="campanha">-->
+
+<!--    &lt;!&ndash; Topo com imagem e nome &ndash;&gt;-->
+<!--    <div class="topo">-->
+<!--      <div class="imagem-campanha">-->
+<!--        <img [src]="getImagemCampanha(campanha.imagemCampanha)" alt="Imagem da campanha" />-->
+<!--      </div>-->
+
+<!--      <div class="info">-->
+<!--        <h2 class="titulo">{{ campanha.nome }}</h2>-->
+
+<!--        &lt;!&ndash; Blocos lado a lado: Endereço + Instituição &ndash;&gt;-->
+<!--        <div class="info-lateral">-->
+<!--          <div class="endereco-box box">-->
+<!--            <h3 class="titulo-endereco">Endereço da Campanha</h3>-->
+<!--            <p>-->
+<!--              {{ campanha.endereco?.rua }}, {{ campanha.endereco?.numero }}<br />-->
+<!--              <ng-container *ngIf="campanha.endereco?.complemento">-->
+<!--                {{ campanha.endereco?.complemento }}<br />-->
+<!--              </ng-container>-->
+<!--              {{ campanha.endereco?.bairro }} - {{ campanha.endereco?.cidade }}/{{ campanha.endereco?.uf }}<br />-->
+<!--              CEP: {{ campanha.endereco?.cep }}-->
+<!--            </p>-->
+<!--          </div>-->
+
+<!--          <div class="instituicao-info box">-->
+<!--            <h3 class="titulo-instituicao">Instituição Responsável</h3>-->
+<!--            <p><strong>Nome:</strong> {{ campanha.nomeInstituicao }}</p>-->
+<!--            <p><strong>Telefone:</strong> {{ formatarTelefone(campanha.telefone) }}</p>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Período e status &ndash;&gt;-->
+<!--        <div class="info-campanha">-->
+<!--          <div class="box">-->
+<!--            <strong>Período: </strong>-->
+<!--            <span>{{ campanha.dataInicio | date: 'dd/MM/yyyy' }} até {{ campanha.dataFim | date: 'dd/MM/yyyy' }}</span>-->
+<!--          </div>-->
+
+<!--          <div class="box status-box">-->
+<!--            <strong>Status:</strong>-->
+<!--            <span class="status-indicador">-->
+<!--              <span-->
+<!--                class="bolinha"-->
+<!--                [ngClass]="campanha.ativa ? 'verde' : 'vermelha'"-->
+<!--              ></span>-->
+<!--              {{ campanha.ativa ? 'Ativa' : 'Inativa' }}-->
+<!--            </span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Descrição &ndash;&gt;-->
+<!--    <div class="descricao-box box">-->
+<!--      <h3 class="titulo-descricao">Descrição da Campanha</h3>-->
+<!--      <p class="descricao">{{ campanha.descricao }}</p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<app-footer></app-footer>-->
+<app-header></app-header>
+
+<div class="pagina-detalhes">
+  <div class="detalhes-container" *ngIf="campanha">
+    <div class="topo">
+      <img [src]="getImagemCampanha(campanha.imagemCampanha)" alt="Imagem da campanha" />
+      <div class="info">
+        <h2>{{ campanha.nome }}</h2>
+
+        <div class="box instituicao-box">
+          <h3 class="subtitulo-box">Instituição Responsável</h3>
+          <p><strong>Nome:</strong> {{ campanha.nomeInstituicao }}</p>
+          <p><strong>Telefone:</strong> {{ formatarTelefone(campanha.telefone) }}</p>
+        </div>
+
+        <div class="box status-periodo-box">
+          <p>
+            <strong>Status:</strong>
+            <span class="status-indicador">
+              <span
+                class="bolinha"
+                [ngClass]="campanha.ativa ? 'verde' : 'vermelha'"
+              ></span>
+              {{ campanha.ativa ? 'Ativa' : 'Inativa' }}
+            </span>
+          </p>
+          <p>
+            <strong>Período:</strong>
+            {{ campanha.dataInicio | date: 'dd/MM/yyyy' }} até {{ campanha.dataFim | date: 'dd/MM/yyyy' }}
+          </p>
+        </div>
+
+        <div class="box endereco-box">
+          <h3 class="subtitulo-box">Endereço da Campanha</h3>
+          <p><strong>Rua:</strong> {{ campanha.endereco?.rua }}, {{ campanha.endereco?.numero }}</p>
+          <p *ngIf="campanha.endereco?.complemento"><strong>Complemento:</strong> {{ campanha.endereco?.complemento }}</p>
+          <p><strong>Bairro:</strong> {{ campanha.endereco?.bairro }}</p>
+          <p><strong>Cidade:</strong> {{ campanha.endereco?.cidade }}</p>
+          <p><strong>Estado:</strong> {{ campanha.endereco?.uf }}</p>
+          <p><strong>CEP:</strong> {{ campanha.endereco?.cep }}</p>
+        </div>
+
+        <div class="box descricao-box" *ngIf="campanha.descricao">
+          <h3 class="titulo-descricao">Descrição da Campanha</h3>
+          <p class="descricao">{{ campanha.descricao }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,102 @@
+.dashboard-container {
+  padding: 40px 20px;
+  background: linear-gradient(to bottom, #fbc2eb, #a6c1ee);
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+
+  .titulo-dashboard {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #222;
+  }
+
+  .cards-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+
+    .card-info {
+      background-color: white;
+      border-radius: 16px;
+      padding: 20px 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 260px;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #444;
+      }
+
+      p {
+        font-size: 24px;
+        font-weight: bold;
+        color: #007bff;
+      }
+    }
+  }
+
+  .graficos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+
+    .grafico {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 500px;
+      max-width: 100%;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      h4 {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #444;
+      }
+
+      canvas {
+        width: 100% !important;
+        height: auto !important;
+      }
+    }
+  }
+}
+
+.botoes-pdf {
+  margin-top: 40px;
+  text-align: center;
+
+  button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #218838;
+    }
+  }
+}

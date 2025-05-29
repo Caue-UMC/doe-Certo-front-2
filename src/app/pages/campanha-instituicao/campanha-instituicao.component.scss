@@ -1,0 +1,327 @@
+.pagina-edicao-campanha {
+  background: linear-gradient(to bottom right, #a1c4fd, #c2e9fb, #fbc2eb);
+  min-height: 100vh;
+  padding: 40px 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.titulo-pagina {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.dashboard-container {
+  display: flex;
+}
+
+.conteudo {
+  flex: 1;
+  margin-left: 250px;
+  padding: 0 40px 40px;
+
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    .btn-adicionar {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #218838;
+      }
+    }
+  }
+
+  .aviso-edicao {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    padding: 12px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+
+    th, td {
+      padding: 14px;
+      text-align: left;
+      border-bottom: 1px solid #eaeaea;
+      vertical-align: middle;
+    }
+
+    th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+      font-size: 15px;
+      color: #444;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: none;
+      border-bottom: 2px solid #049DD9;
+      background-color: #fff;
+      transition: all 0.3s ease;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(4, 157, 217, 0.2);
+      }
+
+      &.invalid {
+        border-bottom: 2px solid #f44336;
+      }
+    }
+
+    .imagem-campanha {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+  }
+
+  .btn-acao {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    margin-right: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+
+    &.editar { background-color: #ffc107; color: white; }
+    &.excluir { background-color: #dc3545; color: white; }
+    &.salvar { background-color: #28a745; color: white; }
+    &.cancelar { background-color: #6c757d; color: white; }
+  }
+}
+
+.form-control,
+.form-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: none;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 15px;
+  border-bottom: 2px solid #049DD9;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(4, 157, 217, 0.2);
+  }
+
+  &.invalid {
+    border-bottom: 2px solid #f44336;
+  }
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #049DD9;
+    cursor: pointer;
+  }
+
+  label {
+    font-size: 15px;
+    color: #333;
+    cursor: pointer;
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal,
+.modal-content {
+  background-color: #fff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 95%;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+
+  h2 {
+    margin-bottom: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 15px;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 2px solid #049DD9;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(4, 157, 217, 0.2);
+    }
+
+    &.invalid {
+      border-bottom: 2px solid #f44336;
+    }
+  }
+
+  .modal-actions,
+  .modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+
+    .btn {
+      width: auto;
+    }
+  }
+
+  .imagem-preview {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 3px solid #049DD9;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+
+    .btn.remover {
+      background-color: #dc3545;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #b52a37;
+      }
+    }
+  }
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &.btn-danger {
+    background-color: black;
+    color: #fff;
+
+    &:hover {
+      background-color: #049DD9;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: #ccc;
+    color: #333;
+
+    &:hover {
+      background-color: #b0b0b0;
+    }
+  }
+
+  &.btn-salvar {
+    background-color: #049DD9;
+    color: #fff;
+
+    &:hover {
+      background-color: #037cb2;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

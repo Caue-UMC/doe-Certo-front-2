@@ -6,6 +6,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { errorInterceptor } from './app/interceptors/error.interceptor';
 import {provideToastr} from "ngx-toastr";
 import {provideAnimations} from "@angular/platform-browser/animations";
+import { provideNgxMask } from 'ngx-mask';
+
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -14,6 +16,7 @@ bootstrapApplication(AppComponent, {
       withInterceptors([errorInterceptor])
     ),
     provideToastr(),
-    provideAnimations()
+    provideAnimations(),
+    provideNgxMask()
   ]
 });

@@ -1,61 +1,91 @@
+<div class="pagina-edicao">
 <div class="user-container">
-  <h2>Editar dados da conta</h2>
+  <app-sidebar></app-sidebar>
+  <h2>Gerencie seus dados</h2>
 
   <form [formGroup]="form">
+    <!-- BLOCO: DADOS DA INSTITUIÇÃO + HISTÓRIA -->
+    <section class="bloco-instituicao">
+      <h3>Dados da Instituição</h3>
 
-    <!-- Imagem de Perfil -->
-    <div class="imagem-container">
-      <img *ngIf="imagemBase64" [src]="'data:image/jpeg;base64,' + imagemBase64" alt="Imagem de Perfil" class="imagem-perfil" />
-    </div>
-
-    <!-- Upload de nova imagem e remover -->
-    <div class="upload-container">
-      <input type="file" accept="image/*" (change)="selecionarImagem($event)" />
-
-      <div class="btn-group" style="margin-top: 10px; gap: 10px;">
-        <button type="button" class="btn salvar" (click)="enviarImagem()">Enviar Imagem</button>
-        <button *ngIf="imagemBase64" type="button" class="btn excluir" (click)="removerImagem()">Remover Imagem</button>
+      <div class="imagem-container">
+        <img *ngIf="imagemBase64" [src]="'data:image/jpeg;base64,' + imagemBase64" alt="Imagem de Perfil" class="imagem-perfil" />
       </div>
-    </div>
 
-    <label for="nomeInstituicao">Nome da Instituição</label>
-    <input id="nomeInstituicao" type="text" formControlName="nomeInstituicao" class="form-input" />
+      <div class="upload-container">
+        <input type="file" accept="image/*" (change)="selecionarImagem($event)" />
+        <div class="btn-group">
+          <button type="button" class="btn salvar" (click)="enviarImagem()">Enviar Imagem</button>
+          <button *ngIf="imagemBase64" type="button" class="btn excluir" (click)="removerImagem()">Remover Imagem</button>
+        </div>
+      </div>
 
-    <label for="telefone">Telefone</label>
-    <input id="telefone" type="text" formControlName="telefone" class="form-input" />
+      <label for="nomeInstituicao">Nome da Instituição</label>
+      <input id="nomeInstituicao" type="text" formControlName="nomeInstituicao" class="form-input" [ngClass]="{ 'is-invalid': form.get('nomeInstituicao')?.invalid && form.get('nomeInstituicao')?.touched }" />
 
-    <label for="endereco">Endereço</label>
-    <input id="endereco" type="text" formControlName="endereco" class="form-input" />
+      <label for="telefone">Telefone</label>
+      <input id="telefone" type="text" formControlName="telefone" mask="(00) 00000-0000" class="form-input" [ngClass]="{ 'is-invalid': form.get('telefone')?.invalid && form.get('telefone')?.touched }" />
 
-    <label for="categoria">Categoria</label>
-    <select id="categoria" formControlName="categoria" class="form-input">
-      <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
-    </select>
+      <label for="categoria">Categoria</label>
+      <select id="categoria" formControlName="categoria" class="form-input" [ngClass]="{ 'is-invalid': form.get('categoria')?.invalid && form.get('categoria')?.touched }">
+        <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria | lowercase | titlecase }}</option>
+      </select>
 
-    <div class="btn-group" style="gap: 10px;">
-      <button type="button" class="btn salvar" (click)="abrirModalSenha('editar')">Salvar alterações</button>
-      <button type="button" class="btn excluir" (click)="abrirModalSenha('excluir')">Excluir conta</button>
-      <button type="button" class="btn alterar-senha" (click)="irParaAlterarSenha()">Alterar Senha</button>
-    </div>
+      <label for="historia">História da Instituição</label>
+      <textarea id="historia" rows="5" formControlName="historia" class="form-input" placeholder="Conte um pouco sobre a missão, visão ou origem da sua instituição..."></textarea>
+    </section>
+
+    <!-- BLOCO: ENDEREÇO -->
+    <section class="bloco-endereco">
+      <h3>Endereço</h3>
+
+      <label for="cep">CEP</label>
+      <input id="cep" type="text" formControlName="cep" mask="00000-000" (input)="aoDigitarCep()" class="form-input" [ngClass]="{ 'is-invalid': form.get('cep')?.invalid && form.get('cep')?.touched }" />
+
+      <label for="rua">Rua</label>
+      <input id="rua" type="text" formControlName="rua" class="form-input" [ngClass]="{ 'is-invalid': form.get('rua')?.invalid && form.get('rua')?.touched }" />
+
+      <label for="numero">Número</label>
+      <input id="numero" type="text" formControlName="numero" class="form-input" [ngClass]="{ 'is-invalid': form.get('numero')?.invalid && form.get('numero')?.touched }" />
+
+      <label for="complemento">Complemento</label>
+      <input id="complemento" type="text" formControlName="complemento" class="form-input" />
+
+      <label for="bairro">Bairro</label>
+      <input id="bairro" type="text" formControlName="bairro" class="form-input" [ngClass]="{ 'is-invalid': form.get('bairro')?.invalid && form.get('bairro')?.touched }" />
+
+      <label for="cidade">Cidade</label>
+      <input id="cidade" type="text" formControlName="cidade" class="form-input" [ngClass]="{ 'is-invalid': form.get('cidade')?.invalid && form.get('cidade')?.touched }" />
+
+      <label for="estado">Estado</label>
+      <select id="estado" formControlName="estado" class="form-input" [ngClass]="{ 'is-invalid': form.get('estado')?.invalid && form.get('estado')?.touched }">
+        <option *ngFor="let uf of ufs" [value]="uf">{{ uf }}</option>
+      </select>
+    </section>
+
+    <!-- BLOCO: SEGURANÇA -->
+    <section class="bloco-seguranca">
+      <h3>Segurança</h3>
+      <div class="btn-group">
+        <button type="button" class="btn salvar" (click)="abrirModalSenha('editar')">Salvar alterações</button>
+        <button type="button" class="btn excluir" (click)="abrirModalSenha('excluir')">Excluir conta</button>
+        <button type="button" class="btn alterar-senha" (click)="irParaAlterarSenha()">Alterar Senha</button>
+      </div>
+    </section>
   </form>
 
-  <!-- Modal de senha -->
   <div class="modal-backdrop" *ngIf="mostrarModalSenha">
     <div class="modal-content">
       <h2>Confirmação de Senha</h2>
       <p>Digite sua senha para continuar.</p>
 
-      <input
-        type="password"
-        [(ngModel)]="senhaConfirmacao"
-        placeholder="Senha"
-        class="form-control"
-      />
+      <input type="password" name="senha" [(ngModel)]="senhaConfirmacao" placeholder="Senha" class="form-control" />
 
-      <div class="modal-buttons" style="gap: 10px;">
+      <div class="modal-buttons">
         <button class="btn btn-secondary" (click)="cancelarModal()">Cancelar</button>
         <button class="btn btn-danger" (click)="confirmarSenha()">Confirmar</button>
       </div>
     </div>
   </div>
+</div>
 </div>

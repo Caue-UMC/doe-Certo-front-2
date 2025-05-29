@@ -1,0 +1,61 @@
+.footer-gradient {
+  height: auto;
+  background: linear-gradient(to right, #f24182, #9b30ff);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+
+  h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 15px;
+    margin: 6px 0;
+  }
+
+  .footer-links {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .footer-social {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: transparent;
+      transition: background-color 0.3s ease;
+
+      img {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        background-color: #ffd6e6;
+      }
+    }
+  }
+}

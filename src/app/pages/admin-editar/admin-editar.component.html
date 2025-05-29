@@ -1,0 +1,244 @@
+<!--<div class="pagina-edicao">-->
+<!--  <app-sidebar></app-sidebar>-->
+<!--  <div class="conteudo">-->
+<!--    <h2 class="titulo">Editar Instituição</h2>-->
+
+<!--    <form [formGroup]="form">-->
+<!--      &lt;!&ndash; BLOCO: DADOS DA INSTITUIÇÃO &ndash;&gt;-->
+<!--      <fieldset class="bloco">-->
+<!--        <legend>Dados da Instituição</legend>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>Nome:</label>-->
+<!--          <input formControlName="nomeInstituicao" type="text" class="form-control"-->
+<!--                 [ngClass]="{'is-invalid': form.get('nomeInstituicao')?.invalid && form.get('nomeInstituicao')?.touched}" />-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>Email:</label>-->
+<!--          <input formControlName="email" type="email" class="form-control"-->
+<!--                 [ngClass]="{'is-invalid': form.get('email')?.invalid && form.get('email')?.touched}" />-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>Telefone:</label>-->
+<!--          <input formControlName="telefone" type="text" class="form-control" mask="(00) 00000-0000"-->
+<!--                 [ngClass]="{'is-invalid': form.get('telefone')?.invalid && form.get('telefone')?.touched}" />-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>Categoria:</label>-->
+<!--          <select formControlName="categoria" class="form-control"-->
+<!--                  [ngClass]="{'is-invalid': form.get('categoria')?.invalid && form.get('categoria')?.touched}">-->
+<!--            <option value="" disabled>Selecione</option>-->
+<!--            <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>-->
+<!--          </select>-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>História:</label>-->
+<!--          <textarea formControlName="historia" class="form-control" rows="4"></textarea>-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>CNPJ:</label>-->
+<!--          <input formControlName="cnpj" type="text" class="form-control" mask="00.000.000/0000-00"-->
+<!--                 [ngClass]="{'is-invalid': form.get('cnpj')?.invalid && form.get('cnpj')?.touched}" />-->
+<!--        </div>-->
+<!--      </fieldset>-->
+
+<!--      &lt;!&ndash; BLOCO: ENDEREÇO &ndash;&gt;-->
+<!--      <fieldset class="bloco" formGroupName="endereco">-->
+<!--        <legend>Endereço</legend>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>CEP:</label>-->
+<!--          <input formControlName="cep" type="text" class="form-control" mask="00000-000"-->
+<!--                 [ngClass]="{'is-invalid': form.get('endereco.cep')?.invalid && form.get('endereco.cep')?.touched}" />-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>Rua:</label>-->
+<!--          <input formControlName="rua" type="text" class="form-control"-->
+<!--                 [ngClass]="{'is-invalid': form.get('endereco.rua')?.invalid && form.get('endereco.rua')?.touched}" />-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>Número:</label>-->
+<!--          <input formControlName="numero" type="text" class="form-control"-->
+<!--                 [ngClass]="{'is-invalid': form.get('endereco.numero')?.invalid && form.get('endereco.numero')?.touched}" />-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>Complemento:</label>-->
+<!--          <input formControlName="complemento" type="text" class="form-control" />-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>Bairro:</label>-->
+<!--          <input formControlName="bairro" type="text" class="form-control"-->
+<!--                 [ngClass]="{'is-invalid': form.get('endereco.bairro')?.invalid && form.get('endereco.bairro')?.touched}" />-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>Cidade:</label>-->
+<!--          <input formControlName="cidade" type="text" class="form-control"-->
+<!--                 [ngClass]="{'is-invalid': form.get('endereco.cidade')?.invalid && form.get('endereco.cidade')?.touched}" />-->
+<!--        </div>-->
+
+<!--        <div class="grupo">-->
+<!--          <label>Estado:</label>-->
+<!--          <select formControlName="uf" class="form-control"-->
+<!--                  [ngClass]="{'is-invalid': form.get('endereco.uf')?.invalid && form.get('endereco.uf')?.touched}">-->
+<!--            <option value="" disabled>Selecione</option>-->
+<!--            <option *ngFor="let uf of estados" [value]="uf">{{ uf }}</option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--      </fieldset>-->
+
+<!--      &lt;!&ndash; BLOCO: IMAGEM &ndash;&gt;-->
+<!--      <fieldset class="bloco imagem">-->
+<!--        <legend>Imagem de Perfil</legend>-->
+
+<!--        <div class="imagem-preview">-->
+<!--          <img [src]="imagemUrl" alt="Imagem de Perfil" />-->
+<!--        </div>-->
+
+<!--        <input type="file" (change)="aoSelecionarImagem($event)" />-->
+<!--        <button type="button" class="btn-remover" (click)="removerImagem()">Remover Imagem</button>-->
+<!--      </fieldset>-->
+
+<!--      &lt;!&ndash; BOTÃO: SALVAR &ndash;&gt;-->
+<!--      <div class="acoes">-->
+<!--        <button type="button" class="btn-salvar" [disabled]="form.invalid" (click)="abrirModalSenha()">Salvar Alterações</button>-->
+<!--      </div>-->
+<!--    </form>-->
+
+<!--    &lt;!&ndash; MODAL DE SENHA &ndash;&gt;-->
+<!--    <div class="modal-backdrop" *ngIf="mostrarModalSenha">-->
+<!--    <div class="modal-content">-->
+<!--        <h2>Confirmação de Senha</h2>-->
+<!--        <p>Digite sua senha para continuar.</p>-->
+
+<!--        <input type="password" [(ngModel)]="senhaConfirmacao" placeholder="Senha" class="form-control" />-->
+
+<!--        <div class="modal-buttons">-->
+<!--          <button class="btn btn-secondary" (click)="cancelarModal()">Cancelar</button>-->
+<!--          <button class="btn btn-danger" (click)="confirmarSenha()">Confirmar</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="pagina-edicao">
+  <div class="user-container">
+    <app-sidebar-admin></app-sidebar-admin>
+    <h2>Editar Instituição</h2>
+
+    <form [formGroup]="form">
+      <!-- BLOCO: DADOS DA INSTITUIÇÃO -->
+      <section class="bloco-instituicao">
+        <h3>Dados da Instituição</h3>
+
+        <div class="imagem-container" *ngIf="imagemUrl">
+          <img [src]="imagemUrl" alt="Imagem de Perfil" class="imagem-perfil" />
+        </div>
+
+        <div class="upload-container">
+          <input type="file" (change)="aoSelecionarImagem($event)" />
+          <div class="btn-group">
+<!--            <button type="button" class="btn salvar" (click)="enviarImagem()">Enviar Imagem</button>-->
+            <button type="button" class="btn excluir" (click)="removerImagem()">Remover Imagem</button>
+          </div>
+        </div>
+
+        <label>Nome</label>
+        <input formControlName="nomeInstituicao" type="text"
+               [ngClass]="{'is-invalid': form.get('nomeInstituicao')?.invalid && form.get('nomeInstituicao')?.touched}" />
+
+        <label>Email</label>
+        <input formControlName="email" type="email"
+               [ngClass]="{'is-invalid': form.get('email')?.invalid && form.get('email')?.touched}" />
+
+        <label>CNPJ</label>
+        <input formControlName="cnpj" type="text" mask="00.000.000/0000-00"
+               [ngClass]="{'is-invalid': form.get('cnpj')?.invalid && form.get('cnpj')?.touched}" />
+
+        <label>Telefone</label>
+        <input formControlName="telefone" type="text" mask="(00) 00000-0000"
+               [ngClass]="{'is-invalid': form.get('telefone')?.invalid && form.get('telefone')?.touched}" />
+
+        <label>Categoria</label>
+        <select formControlName="categoria"
+                [ngClass]="{'is-invalid': form.get('categoria')?.invalid && form.get('categoria')?.touched}">
+          <option value="" disabled>Selecione</option>
+          <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+        </select>
+
+        <label>História</label>
+        <textarea formControlName="historia" rows="5"></textarea>
+
+      </section>
+
+      <!-- BLOCO: ENDEREÇO -->
+      <section class="bloco-endereco" formGroupName="endereco">
+        <h3>Endereço</h3>
+
+        <label>CEP</label>
+        <input formControlName="cep" type="text" mask="00000-000"
+               [ngClass]="{'is-invalid': form.get('cep')?.invalid && form.get('cep')?.touched}" />
+
+        <label>Rua</label>
+        <input formControlName="rua" type="text"
+               [ngClass]="{'is-invalid': form.get('rua')?.invalid && form.get('rua')?.touched}" />
+
+        <label>Número</label>
+        <input formControlName="numero" type="text"
+               [ngClass]="{'is-invalid': form.get('numero')?.invalid && form.get('numero')?.touched}" />
+
+        <label>Complemento</label>
+        <input formControlName="complemento" type="text" />
+
+        <label>Bairro</label>
+        <input formControlName="bairro" type="text"
+               [ngClass]="{'is-invalid': form.get('bairro')?.invalid && form.get('bairro')?.touched}" />
+
+        <label>Cidade</label>
+        <input formControlName="cidade" type="text"
+               [ngClass]="{'is-invalid': form.get('cidade')?.invalid && form.get('cidade')?.touched}" />
+
+        <label>Estado</label>
+        <select formControlName="uf"
+                [ngClass]="{'is-invalid': form.get('uf')?.invalid && form.get('uf')?.touched}">
+          <option value="" disabled>Selecione</option>
+          <option *ngFor="let uf of estados" [value]="uf">{{ uf }}</option>
+        </select>
+      </section>
+
+      <!-- BLOCO: SEGURANÇA -->
+      <section class="bloco-seguranca">
+        <h3>Segurança</h3>
+        <div class="btn-group">
+          <button type="button" class="btn salvar" [disabled]="form.invalid" (click)="abrirModalSenha()">Salvar Alterações</button>
+<!--          <button type="button" class="btn excluir" (click)="excluirConta()">Excluir Conta</button>-->
+<!--          <button type="button" class="btn alterar-senha" (click)="irParaAlterarSenha()">Alterar Senha</button>-->
+        </div>
+      </section>
+    </form>
+
+    <!-- MODAL DE SENHA -->
+    <div class="modal-backdrop" *ngIf="mostrarModalSenha">
+      <div class="modal-content">
+        <h2>Confirmação de Senha</h2>
+        <p>Digite sua senha para continuar.</p>
+
+        <input type="password" [(ngModel)]="senhaConfirmacao" placeholder="Senha" class="form-control" />
+
+        <div class="modal-buttons">
+          <button class="btn btn-secondary" (click)="cancelarModal()">Cancelar</button>
+          <button class="btn btn-danger" (click)="confirmarSenha()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

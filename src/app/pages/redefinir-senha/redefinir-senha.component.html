@@ -1,17 +1,48 @@
-<div class="container">
-  <h2>Redefinir Senha</h2>
-
-  <form [formGroup]="form" (ngSubmit)="redefinirSenha()">
-    <label>Nova Senha</label>
-    <input type="password" formControlName="novaSenha" placeholder="Digite a nova senha" />
-
-    <label>Confirmar Nova Senha</label>
-    <input type="password" formControlName="confirmaSenha" placeholder="Confirme a nova senha" />
-
-    <div class="error" *ngIf="form.errors?.['senhasDiferentes'] && (form.dirty || form.touched)">
-      As senhas não coincidem.
+<app-default-login-layout
+  title="Redefinir Senha"
+  [primaryBtnText]="'Redefinir Senha'"
+  secundaryBtnText="Voltar"
+  [disablePrimaryBtn]="form.invalid"
+  (submit)="redefinirSenha()"
+  (navigate)="voltar()"
+>
+  <form [formGroup]="form">
+    <!-- Nova Senha -->
+    <div class="input-wrapper">
+      <label for="novaSenha">Nova Senha</label>
+      <div class="select-wrapper">
+        <input
+          id="novaSenha"
+          type="password"
+          formControlName="novaSenha"
+          placeholder="Digite a nova senha"
+        />
+        <div class="right-group">
+          <img src="/assets/svg/senhaconfirma-icon.svg" alt="Ícone senha" class="right-icon" />
+        </div>
+      </div>
     </div>
+    <p class="error" *ngIf="form.get('novaSenha')?.invalid && form.get('novaSenha')?.touched">
+      A senha precisa ter no mínimo 6 caracteres.
+    </p>
 
-    <button class="btn" type="submit" [disabled]="form.invalid">Redefinir Senha</button>
+    <!-- Confirmar Senha -->
+    <div class="input-wrapper">
+      <label for="confirmaSenha">Confirmar Senha</label>
+      <div class="select-wrapper">
+        <input
+          id="confirmaSenha"
+          type="password"
+          formControlName="confirmaSenha"
+          placeholder="Confirme a nova senha"
+        />
+        <div class="right-group">
+          <img src="/assets/svg/senha-icon.svg" alt="Ícone senha" class="right-icon" />
+        </div>
+      </div>
+    </div>
+    <p class="error" *ngIf="form.errors?.['senhasDiferentes'] && (form.dirty || form.touched)">
+      As senhas não coincidem.
+    </p>
   </form>
-</div>
+</app-default-login-layout>

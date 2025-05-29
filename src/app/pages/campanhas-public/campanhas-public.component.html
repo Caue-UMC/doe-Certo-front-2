@@ -1,0 +1,157 @@
+<!--<app-header></app-header>-->
+
+<!--<main class="pagina-explorar">-->
+<!--  <section class="filtros-container">-->
+<!--    <h2>Junte-se a uma causa e faça a diferença!</h2>-->
+<!--    <div class="filtros">-->
+
+<!--      &lt;!&ndash; NOME DA CAMPANHA &ndash;&gt;-->
+<!--      <div class="autocomplete-container">-->
+<!--        <img src="assets/svg/lupaBusca.svg" alt="Buscar" class="lupa-icon" />-->
+<!--        <input type="text" placeholder="Nome da campanha"-->
+<!--               [(ngModel)]="filtros.nome"-->
+<!--               (input)="buscarPorNome()"-->
+<!--               (blur)="fecharSugestoes('nome')" />-->
+<!--        <ul class="autocomplete-list" *ngIf="sugestoesNome.length || nenhumNome">-->
+<!--          <li *ngFor="let nome of sugestoesNome" (click)="selecionarNome(nome)" class="autocomplete-item">-->
+<!--            {{ nome }}-->
+<!--          </li>-->
+<!--          <li *ngIf="nenhumNome" class="autocomplete-item disabled">Nenhuma campanha encontrada com esse nome</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; NOME DA INSTITUIÇÃO &ndash;&gt;-->
+<!--      <div class="autocomplete-container">-->
+<!--        <img src="assets/svg/lupaBusca.svg" alt="Buscar" class="lupa-icon" />-->
+<!--        <input type="text" placeholder="Nome da instituição"-->
+<!--               [(ngModel)]="filtros.instituicao"-->
+<!--               (input)="buscarPorInstituicao()"-->
+<!--               (blur)="fecharSugestoes('instituicao')" />-->
+<!--        <ul class="autocomplete-list" *ngIf="sugestoesInstituicao.length || nenhumaInstituicao">-->
+<!--          <li *ngFor="let inst of sugestoesInstituicao" (click)="selecionarInstituicao(inst)" class="autocomplete-item">-->
+<!--            {{ inst }}-->
+<!--          </li>-->
+<!--          <li *ngIf="nenhumaInstituicao" class="autocomplete-item disabled">Essa instituição ainda não divulgou campanhas públicas.</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; ESTADO &ndash;&gt;-->
+<!--      <select [(ngModel)]="filtros.uf">-->
+<!--        <option value="">Todos os estados</option>-->
+<!--        <option *ngFor="let uf of estados" [value]="uf">{{ uf }}</option>-->
+<!--      </select>-->
+
+<!--      &lt;!&ndash; STATUS &ndash;&gt;-->
+<!--      <select [(ngModel)]="filtros.status">-->
+<!--        <option value="">Todos os status</option>-->
+<!--        <option value="ATIVA">Ativa</option>-->
+<!--        <option value="INATIVA">Inativa</option>-->
+<!--      </select>-->
+
+<!--      &lt;!&ndash; BOTÃO &ndash;&gt;-->
+<!--      <button (click)="buscarCampanhas()">Filtrar</button>-->
+<!--    </div>-->
+<!--  </section>-->
+
+<!--  <section class="lista-instituicoes">-->
+<!--    <div class="card" *ngFor="let camp of campanhas" (click)="verDetalhes(camp)">-->
+<!--      <img [src]="getImagem(camp.imagemInstituicao)" alt="Instituição" />-->
+<!--      <p>{{ camp.nome }}<br /><small>{{ camp.nomeInstituicao }}</small></p>-->
+<!--    </div>-->
+
+<!--    <div class="sem-resultados" *ngIf="campanhas.length === 0">-->
+<!--      Nenhuma campanha encontrada com os filtros selecionados.-->
+<!--    </div>-->
+<!--  </section>-->
+<!--</main>-->
+
+<!--<app-footer></app-footer>-->
+<app-header></app-header>
+
+<main class="pagina-explorar">
+  <section class="filtros-container">
+    <h2>Junte-se a uma causa e faça a diferença!</h2>
+    <div class="filtros">
+
+      <!-- NOME DA CAMPANHA -->
+      <div class="autocomplete-container">
+        <img src="assets/svg/lupaBusca.svg" alt="Buscar" class="lupa-icon" />
+        <input type="text" placeholder="Nome da campanha"
+               [(ngModel)]="filtros.nome"
+               (input)="buscarPorNome()"
+               (blur)="fecharSugestoes('nome')" />
+        <ul class="autocomplete-list" *ngIf="sugestoesNome.length || nenhumNome">
+          <li *ngFor="let nome of sugestoesNome" (click)="selecionarNome(nome)" class="autocomplete-item">
+            {{ nome }}
+          </li>
+          <li *ngIf="nenhumNome" class="autocomplete-item disabled">
+            Nenhuma campanha encontrada com esse nome
+          </li>
+        </ul>
+      </div>
+
+      <!-- NOME DA INSTITUIÇÃO -->
+      <div class="autocomplete-container">
+        <img src="assets/svg/lupaBusca.svg" alt="Buscar" class="lupa-icon" />
+        <input type="text" placeholder="Nome da instituição"
+               [(ngModel)]="filtros.instituicao"
+               (input)="buscarPorInstituicao()"
+               (blur)="fecharSugestoes('instituicao')" />
+        <ul class="autocomplete-list" *ngIf="sugestoesInstituicao.length || nenhumaInstituicao">
+          <li *ngFor="let inst of sugestoesInstituicao" (click)="selecionarInstituicao(inst)" class="autocomplete-item">
+            {{ inst }}
+          </li>
+          <li *ngIf="nenhumaInstituicao" class="autocomplete-item disabled">
+            Essa instituição ainda não divulgou campanhas públicas.
+          </li>
+        </ul>
+      </div>
+
+      <!-- CIDADE -->
+      <div class="autocomplete-container">
+        <img src="assets/svg/lupaBusca.svg" alt="Buscar" class="lupa-icon" />
+        <input type="text" placeholder="Cidade"
+               [(ngModel)]="filtros.cidade"
+               (input)="buscarPorCidade()"
+               (blur)="fecharSugestoes('cidade')" />
+        <ul class="autocomplete-list" *ngIf="sugestoesCidade.length || nenhumaCidade">
+          <li *ngFor="let cidade of sugestoesCidade" (click)="selecionarCidade(cidade)" class="autocomplete-item">
+            {{ cidade }}
+          </li>
+          <li *ngIf="nenhumaCidade" class="autocomplete-item disabled">
+            Nenhuma campanha encontrada nessa cidade.
+          </li>
+        </ul>
+      </div>
+
+      <!-- ESTADO -->
+      <select [(ngModel)]="filtros.uf">
+        <option value="">Todos os estados</option>
+        <option *ngFor="let uf of estados" [value]="uf">{{ uf }}</option>
+      </select>
+
+      <!-- STATUS -->
+      <select [(ngModel)]="filtros.status">
+        <option value="">Todos os status</option>
+        <option value="ATIVA">Ativa</option>
+        <option value="INATIVA">Inativa</option>
+      </select>
+
+      <!-- BOTÃO -->
+      <button (click)="buscarCampanhas()">Filtrar</button>
+    </div>
+  </section>
+
+  <section class="lista-instituicoes">
+    <div class="card" *ngFor="let camp of campanhas" (click)="verDetalhes(camp)">
+      <img [src]="camp.imagemCampanha ? 'data:image/jpeg;base64,' + camp.imagemCampanha : 'assets/png/imagem-campanha-padrao.png'" alt="Imagem da campanha" />
+      <p>{{ camp.nome }}<br /><small>{{ camp.nomeInstituicao }}</small></p>
+    </div>
+
+    <div class="sem-resultados" *ngIf="campanhas.length === 0">
+      Nenhuma campanha encontrada com os filtros selecionados.
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

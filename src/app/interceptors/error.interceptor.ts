@@ -21,6 +21,15 @@ export const errorInterceptor: HttpInterceptorFn = (
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       const status = error.status;
+      const url = req.url;
+
+      // Rotas com tratamento próprio de erro 400 no componente
+      const rotasComErroTratado = ['/campanhas', '/lista', '/instituicoes'];
+
+      const erroJaTratado = status === 400 && rotasComErroTratado.some(r => url.includes(r));
+      if (erroJaTratado) {
+        return throwError(() => error); // ignora toast duplicado
+      }
 
       switch (status) {
         case 0:
@@ -28,21 +37,18 @@ export const errorInterceptor: HttpInterceptorFn = (
           break;
 
         case 400:
-          if (
-            typeof error.error !== 'string' ||
-            !['Token inválido', 'Token inválido ou expirado'].includes(error.error)
-          ) {
-            toastr.warning(error.error || 'Requisição inválida.');
+          if (typeof error.error === 'string') {
+            toastr.error(error.error);
+          } else {
+            toastr.warning('Requisição inválida.');
           }
           break;
 
         case 401:
-          if (!req.url.includes('/login')) {
+          if (!url.includes('/login')) {
             toastr.error('Você precisa estar logado.', 'Erro 401');
             sessionStorage.clear();
             router.navigate(['/erro/401']);
-          } else {
-            toastr.error('Email ou senha incorretos.');
           }
           break;
 
@@ -52,23 +58,14 @@ export const errorInterceptor: HttpInterceptorFn = (
           break;
 
         case 404:
-          if (req.url.includes('/recuperacao/solicitar')) {
-            toastr.warning(error.error || 'Email não encontrado.');
-          } else {
+          if (!url.includes('/recuperacao/solicitar')) {
             toastr.warning('Recurso não encontrado.');
             router.navigate(['/erro/404']);
           }
           break;
 
         case 429:
-          if (
-            typeof error.error === 'string' &&
-            error.error.includes('Já existe um link de redefinição')
-          ) {
-            toastr.warning('Você já solicitou redefinição. Verifique seu email.');
-          } else {
-            toastr.warning(error.error || 'Você já fez uma solicitação recentemente.');
-          }
+          toastr.warning(error.error || 'Você já fez uma solicitação recentemente.');
           break;
 
         case 500:

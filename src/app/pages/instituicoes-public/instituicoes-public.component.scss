@@ -1,0 +1,204 @@
+.pagina-explorar {
+  padding: 40px 20px;
+  background: linear-gradient(to bottom right, #a1c4fd, #c2e9fb, #fbc2eb);
+  min-height: calc(100vh - 160px);
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+
+    &::after {
+      content: '';
+      width: 60px;
+      height: 4px;
+      background: #f24182;
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+  }
+}
+
+.filtros-container {
+  max-width: 1000px;
+  margin: 0 auto 30px;
+  background: linear-gradient(to left, #F69944, #FFCD05);
+  padding: 30px;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  position: relative;
+
+  .autocomplete-container {
+    position: relative;
+    width: 240px;
+
+    input {
+      width: 100%;
+      padding: 12px 14px 12px 40px;
+      border-radius: 12px;
+      border: 2px solid black;
+      background-color: white;
+      font-size: 16px;
+
+      &:focus {
+        outline: none;
+        border-color: #049dd9;
+      }
+    }
+
+    .lupa-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+    }
+
+    .autocomplete-list {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 10;
+      margin-top: 4px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      list-style: none;
+      padding: 0;
+
+      .autocomplete-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+
+        &.disabled {
+          cursor: default;
+          color: #999;
+        }
+
+        .autocomplete-img {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  select {
+    width: 240px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid black;
+    font-size: 16px;
+    background-color: white;
+
+    &:focus {
+      border-color: #049dd9;
+      outline: none;
+    }
+  }
+
+  button {
+    background-color: #f24182;
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: 600;
+
+    &:hover {
+      background-color: #d62f6b;
+      transform: scale(1.02);
+    }
+  }
+}
+
+.lista-instituicoes {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+
+  &:hover {
+    transform: translateY(-6px);
+  }
+
+  img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+  }
+
+  p {
+    margin: 0;
+    padding: 14px 12px;
+    font-weight: 600;
+    color: #333;
+    font-size: 19px;
+    background: linear-gradient(to left, #0E78D4, #0E88CC, #13E9EF);
+    border-top: 1px solid #eee;
+  }
+}
+
+.sem-resultados {
+  text-align: center;
+  margin-top: 40px;
+  color: #777;
+  font-size: 18px;
+}
+
+.uf-input {
+  text-transform: uppercase;
+
+  &::placeholder {
+    text-transform: none;
+  }
+}
+

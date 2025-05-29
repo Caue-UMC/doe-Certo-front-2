@@ -4,32 +4,31 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-instituicao',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SidebarComponent],
   templateUrl: './instituicao.component.html',
   styleUrls: ['./instituicao.component.scss']
 })
 export class InstituicaoComponent implements OnInit {
-  nomeInstituicao: string = '';
-  imagemBase64: string = '';
   produtos: any[] = [];
-
-  mostrarModal = false;
-  novoItem = {
-    nome: '',
-    descricao: '',
-    status: ''
-  };
   statusOptions: string[] = [];
 
-  // Modal de senha
+  mostrarModal = false;
   mostrarModalSenha = false;
+
+  novoItem = { nome: '', descricao: '', status: '' };
   senhaConfirmacao = '';
   acaoPendente: 'editar' | 'excluir' = 'editar';
   itemSelecionado: any = null;
+  backupProdutos: { [id: string]: any } = {};
+
+  nomeVazio = false;
+  descricaoVazia = false;
+  statusVazio = false;
 
   constructor(
     private http: HttpClient,
@@ -40,42 +39,40 @@ export class InstituicaoComponent implements OnInit {
   ngOnInit(): void {
     const id = sessionStorage.getItem('id');
     const token = sessionStorage.getItem('auth-token');
-    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-    // Buscar dados da instituição
-    this.http.get<any>(`http://localhost:8080/instituicoes/${id}`, { headers })
-      .subscribe(data => {
-        this.nomeInstituicao = data.nomeInstituicao;
-        this.imagemBase64 = data.imagemPerfil;
-      });
-
-    // Buscar lista de produtos
     this.http.get<any[]>(`http://localhost:8080/lista/instituicao/${id}`, { headers })
-      .subscribe(data => {
-        this.produtos = data;
-      });
+      .subscribe(data => this.produtos = data);
 
-    // Buscar status
     this.http.get<string[]>(`http://localhost:8080/lista/status`, { headers })
-      .subscribe(status => {
-        this.statusOptions = status;
-      });
+      .subscribe(status => this.statusOptions = status);
   }
 
-  // Abrir modal para novo item
-  abrirModal() {
+  abrirModal(): void {
     this.novoItem = { nome: '', descricao: '', status: '' };
+    this.nomeVazio = false;
+    this.descricaoVazia = false;
+    this.statusVazio = false;
     this.mostrarModal = true;
   }
 
-  fecharModal() {
+  fecharModal(): void {
     this.mostrarModal = false;
   }
 
-  salvarItem() {
+  salvarItem(): void {
+    this.nomeVazio = !this.novoItem.nome.trim();
+    this.descricaoVazia = !this.novoItem.descricao.trim();
+    this.statusVazio = !this.novoItem.status;
+
+    if (this.nomeVazio || this.descricaoVazia || this.statusVazio) {
+      this.toast.error('Preencha todos os campos antes de salvar.');
+      return;
+    }
+
     const id = sessionStorage.getItem('id');
     const token = sessionStorage.getItem('auth-token');
-    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     const payload = {
       nome: this.novoItem.nome,
@@ -84,46 +81,65 @@ export class InstituicaoComponent implements OnInit {
       idInstituicao: id
     };
 
-    this.http.post(`http://localhost:8080/lista`, payload, { headers })
-      .subscribe(() => {
-        this.toast.success('Item cadastrado com sucesso!');
-        this.fecharModal();
-        this.ngOnInit();
-      });
+    this.http.post(`http://localhost:8080/lista`, payload, { headers }).subscribe(() => {
+      this.toast.success('Item cadastrado com sucesso!');
+      this.fecharModal();
+      this.ngOnInit();
+    });
   }
 
-  editarConta() {
-    this.router.navigate(['/user']);
+  editarItem(item: any): void {
+    this.backupProdutos[item.id] = JSON.parse(JSON.stringify(item));
+    item.editando = true;
   }
 
-  // Abrir modal de senha para editar ou excluir
-  abrirModalSenha(item: any, acao: 'editar' | 'excluir') {
+  cancelarEdicao(item: any): void {
+    const original = this.backupProdutos[item.id];
+    if (original) {
+      Object.assign(item, original);
+      item.editando = false;
+    }
+  }
+
+  abrirModalSenha(item: any, acao: 'editar' | 'excluir'): void {
     this.itemSelecionado = item;
     this.acaoPendente = acao;
     this.senhaConfirmacao = '';
     this.mostrarModalSenha = true;
   }
 
-  // Cancelar modal de senha
-  cancelarModalSenha() {
+  cancelarModalSenha(): void {
     this.mostrarModalSenha = false;
     this.itemSelecionado = null;
     this.acaoPendente = 'editar';
     this.senhaConfirmacao = '';
   }
 
-  // Confirmar ação (editar ou excluir) com senha
-  confirmarAcao() {
-    if (!this.itemSelecionado || !this.senhaConfirmacao) return;
+  confirmarAcao(): void {
+    if (!this.itemSelecionado) return;
+
+    if (!this.senhaConfirmacao.trim()) {
+      this.toast.error('Senha obrigatória.');
+      return;
+    }
 
     const token = sessionStorage.getItem('auth-token');
-    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     if (this.acaoPendente === 'editar') {
+      const nome = this.itemSelecionado.nome?.trim();
+      const descricao = this.itemSelecionado.descricao?.trim();
+      const status = this.itemSelecionado.statusProduto;
+
+      if (!nome || !descricao || !status) {
+        this.toast.error('Preencha todos os campos antes de salvar.');
+        return;
+      }
+
       const body = {
-        nomeProduto: this.itemSelecionado.nome,
-        descricao: this.itemSelecionado.descricao,
-        statusProduto: this.itemSelecionado.statusProduto,
+        nomeProduto: nome,
+        descricao: descricao,
+        statusProduto: status,
         senha: this.senhaConfirmacao
       };
 
@@ -132,7 +148,11 @@ export class InstituicaoComponent implements OnInit {
           next: () => {
             this.toast.success('Item editado com sucesso!');
             this.itemSelecionado.editando = false;
+            delete this.backupProdutos[this.itemSelecionado.id];
             this.cancelarModalSenha();
+          },
+          error: (err) => {
+            this.toast.error(err.error); // <-- ESSENCIAL
           }
         });
 
@@ -148,14 +168,11 @@ export class InstituicaoComponent implements OnInit {
             this.toast.success('Item excluído com sucesso!');
             this.cancelarModalSenha();
             this.ngOnInit();
+          },
+          error: (err) => {
+            this.toast.error(err.error);
           }
         });
     }
   }
-
-  // Cancelar edição inline
-  cancelarEdicao(item: any) {
-    item.editando = false;
-  }
-
 }
